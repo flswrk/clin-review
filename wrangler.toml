@@ -1,4 +1,4 @@
-name = "flosswork-review"
+name = "clin-review"
 main = "worker.js"
 compatibility_date = "2025-09-01"
 
