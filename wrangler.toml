@@ -1,0 +1,14 @@
+name = "flosswork-review"
+main = "worker.js"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+# Optional: switch AI provider/model without touching code
+# [vars]
+# AI_BASE_URL = "https://api.groq.com/openai/v1"
+# MODEL = "openai/gpt-oss-120b"
+# FALLBACK_MODEL = "llama-3.3-70b-versatile"   # use "none" to turn the backup off
