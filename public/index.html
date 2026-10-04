@@ -26,9 +26,9 @@ window.FW = {
   //    lead:true  = a lead doctor. staff:true = staff member: her name is always placed AFTER a lead
   //    doctor in the review (a lead is auto-added if the patient picked only staff).
   doctors: [
-    { name: "Dr. Priyesh Gupta", role: "Implantologist", emoji: "🧑‍⚕️", lead: true },
-    { name: "Dr. Nehal Saraf",   role: "Orthodontist",   emoji: "🧑‍⚕️", lead: true },
-    { name: "Dr. Anisha Mishra", role: "",               emoji: "🧑‍⚕️", staff: true },
+    { name: "Dr. Priyesh Gupta", role: "Founder & Implantologist", emoji: "🧑‍⚕️", lead: true },
+    { name: "Dr. Nehal Saraf",   role: "Co-Founder & Orthodontist", emoji: "🧑‍⚕️", lead: true },
+    { name: "Dr. Anisha Mishra", role: "General dentist",  emoji: "🧑‍⚕️", staff: true },
     { name: "The whole team",    role: "",               emoji: "🤝",   team: true }
   ],
 
@@ -123,6 +123,8 @@ window.FW = {
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;background:#fff}
 body{margin:0;background:#fff;color:var(--ink);font-family:'Figtree',system-ui,sans-serif;font-size:16px;line-height:1.5}
+button,textarea,input{font-family:inherit}
+button{cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
 /* phone: the page fills the screen. Desktop/tablet (below): a rounded card that ends where its content ends. */
 .shell{max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:#fff;padding-top:env(safe-area-inset-top,0px)}
 @media (min-width:600px){
@@ -221,11 +223,12 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .ind{flex:none;width:28px;height:28px;border:2.5px solid #D6D0CC;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s}
 .ind svg,.badge svg,.ck svg{fill:none;stroke:#fff;stroke-width:3.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24}
 .ind svg{width:14px;height:14px}
-.opt[aria-pressed="true"],.tcard[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff;animation:pop .34s cubic-bezier(.34,1.56,.64,1)}
-.opt[aria-pressed="true"] .nm,.tcard[aria-pressed="true"] .tl{color:#fff}
-.opt[aria-pressed="true"] small{color:#E6F0FF}
-.opt[aria-pressed="true"] .ind{background:#fff;border-color:#fff}
-.opt[aria-pressed="true"] .ind svg{stroke:var(--blue)}
+/* doctors: selected = blue border (white card, blue tick circle) */
+.opt[aria-pressed="true"]{border-color:var(--blue);animation:pop .34s cubic-bezier(.34,1.56,.64,1)}
+.opt[aria-pressed="true"] .ind{background:var(--blue);border-color:var(--blue)}
+/* treatments: selected = solid blue fill */
+.tcard[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff;animation:pop .34s cubic-bezier(.34,1.56,.64,1)}
+.tcard[aria-pressed="true"] .tl{color:#fff}
 [aria-pressed="true"] .ind svg,[aria-pressed="true"] .badge svg,[aria-pressed="true"] .ck svg{animation:draw .35s .05s ease-out forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes pop{0%{transform:scale(.95)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
@@ -316,7 +319,6 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 @media (max-height:640px){.hero{height:190px}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}#confetti{display:none}}
 
-.mid-tag{align-self:center;margin:0 0 2px}
 
 /* treatment screen: all eight cards fit on the phone screen; the grid shares whatever height is left */
 #s-treatment.active{display:flex;flex-direction:column}
@@ -392,6 +394,86 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 
 /* thank-you page: breathing room under the last line (no action bar on this page) */
 #s-thanks{padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+
+/* "What made you smile?": everything fits on one phone screen (choices sit in two columns) */
+#s-liked.active{display:flex;flex-direction:column}
+#s-liked .q{padding-bottom:6px}
+#s-liked .q h2{font-size:30px}
+#s-liked .q p{margin-top:3px}
+#s-liked .grp{margin:12px 0 7px}
+#s-liked .chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#s-liked .chip{justify-content:center;text-align:center;min-height:46px;padding:4px 10px;border-radius:23px;font-size:14px;line-height:1.15}
+#s-liked .field{margin:12px 0 6px}
+#extra{height:64px}
+#s-liked .cta{margin-top:auto}
+@media (max-height:790px){
+  #s-liked .q h2{font-size:27px}
+  #s-liked .grp{margin:8px 0 5px}
+  #s-liked .chip{min-height:42px}
+  #s-liked .chips{gap:7px}
+  #s-liked .field{margin:8px 0 4px}
+  #extra{height:50px}
+  #s-liked .cta{padding-top:6px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-height:700px){
+  #s-liked .q h2{font-size:26px}#s-liked .q p{font-size:14.5px}
+  #s-liked .grp{margin:8px 0 5px;font-size:12.5px}
+  #s-liked .chips{gap:6px}
+  #s-liked .chip{min-height:42px;font-size:13.5px}
+  #s-liked .field{margin:8px 0 4px;font-size:13px}
+  #extra{height:44px;padding:9px 14px}
+  #s-liked .cta{padding-top:8px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));gap:6px}
+  #s-liked .btn{min-height:52px}
+}
+@media (max-height:600px){
+  #s-liked .q h2{font-size:22px}#s-liked .q p{font-size:13.5px;margin-top:1px}
+  #s-liked .grp{margin:5px 0 3px;font-size:12px}
+  #s-liked .chips{gap:5px}
+  #s-liked .chip{min-height:38px;font-size:13px;padding:2px 8px}
+  #s-liked .field{margin:5px 0 3px;font-size:12px}
+  #extra{height:38px;padding:7px 12px;font-size:15px}
+  #s-liked .cta{padding-top:6px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));gap:4px}
+  #s-liked .btn{min-height:48px}
+  #s-liked .meta{font-size:13px}
+}
+
+/* "Anything else?" box: no scroll bar or arrows (long text still scrolls quietly inside) */
+#extra{overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
+#extra::-webkit-scrollbar{display:none;width:0;height:0}
+
+/* doctors page: longer role lines stay on one line, and the page fits on a short phone screen */
+@media (max-width:420px){
+  .opt{gap:9px;padding:0 12px 0 16px}
+  .otxt small{font-size:12.5px}
+  .ini{width:36px;height:36px;font-size:13px}
+  .ind{width:26px;height:26px}
+}
+#s-doctor.active{display:flex;flex-direction:column}
+#s-doctor .cta{margin-top:auto}
+@media (max-height:790px){
+  #s-doctor .q h2{font-size:28px}
+  #s-doctor .list{gap:9px}
+  .opt{min-height:68px}
+  #s-doctor .cta{padding-top:6px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-height:700px){
+  #s-doctor .q{padding-top:2px;padding-bottom:6px}
+  #s-doctor .q h2{font-size:26px}#s-doctor .q p{font-size:14.5px}
+  #s-doctor .list{gap:8px;padding-top:2px}
+  .opt{min-height:60px}
+  .otxt .nm{font-size:16.5px}
+  #s-doctor .btn{min-height:52px}
+}
+@media (max-height:600px){
+  #s-doctor .q h2{font-size:22px}#s-doctor .q p{font-size:13.5px}
+  #s-doctor .list{gap:6px}
+  .opt{min-height:54px}
+  .otxt .nm{font-size:15.5px}.otxt small{font-size:12px}
+  #s-doctor .btn{min-height:48px}
+}
+
+/* "Writing your review" screen: space under the loading card (this screen has no action bar yet) */
+#loading{padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body data-s="s-welcome">
@@ -435,11 +517,11 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
       <div id="heroName" class="hero-name">Flosswork™ Dental Clinic</div>
     </div>
     <div class="q center">
-      <h1>Hi there! Ready to share how it went?</h1>
-      <p>It takes about a minute. We will help with the words.</p>
+      <h1>Ready to share your review?</h1>
+      <p>It takes about a minute.</p>
     </div>
     <div class="cta">
-      <button class="btn primary" type="button" data-go="s-doctor">Yes, let's go</button>
+      <button class="btn primary" type="button" data-go="s-doctor">Yes, let's use AI</button>
       <button class="btn link" type="button" data-go="s-own">I will write it myself</button>
       <p class="fine">You post it yourself, and you can change every word first.</p>
     </div>
@@ -486,7 +568,7 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
     <label class="field" for="extra">Anything else? <em>(optional)</em></label>
     <textarea id="extra" rows="2" maxlength="200" enterkeyhint="done" autocapitalize="sentences" placeholder="For example: I was nervous, but felt calm throughout."></textarea>
 
-    <div class="cta"><div class="meta"><b id="likeN">0</b> of <span id="maxN2">5</span> selected</div><button class="btn primary" id="writeBtn" type="button" disabled>Write my review</button></div>
+    <div class="cta"><div class="meta"><b id="likeN">0</b> of <span id="maxN2">5</span> selected</div><button class="btn primary" id="writeBtn" type="button">Write my review</button></div>
   </section>
 
   <!-- WRITE / EDIT -->
@@ -504,9 +586,8 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
         <button class="btn ghost" data-go="s-liked" type="button"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Change picks</button>
       </div>
       <div class="cta">
-        <span class="tag mid-tag">Last step, you are nearly done</span>
         <button class="btn primary" id="copyGo" type="button">Copy &amp; go to Google</button>
-        <p class="fine">Your review is copied for you. On Google, choose your rating and paste it in.</p>
+        <p class="fine">Your review is copied for you. Google opens in a new tab: choose your rating and paste it in.</p>
       </div>
     </div>
   </section>
@@ -651,7 +732,7 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
     if (!id || !document.getElementById(id)) id = 's-welcome';
     if (id === 's-go' || id === 's-thanks') id = 's-write';        // never re-enter the redirect screens
     const ready = { 's-treatment': state.doctors.size > 0, 's-liked': state.treatments.size + (typeof otherValid === 'function' && otherValid() ? 1 : 0) > 0,
-                    's-write': state.liked.size > 0 && !!$('#review').value };
+                    's-write': !!$('#review').value };
     if (id in ready && !ready[id]) id = 's-welcome';                // reloaded page: nothing chosen yet
     if (id === 's-write') { $('#loading').hidden = true; $('#result').hidden = false; }
     show(id, false);
@@ -756,7 +837,6 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
       if (on) { if (state.liked.size >= C.maxLiked) return false; state.liked.set(it.label, it.say); }
       else state.liked.delete(it.label);
       $('#likeN').textContent = state.liked.size; bump($('#likeN'));
-      setReady($('#writeBtn'), state.liked.size > 0);
       return on;
     })));
   }
@@ -787,14 +867,15 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
       `${cap(who)} ${plural ? 'were' : 'was'} wonderful during ${phrase} at ${clinic}.`
     ];
     const openers = p.hasCustom ? opens.filter(o => !/ during /.test(o)) : opens;
-    const mids = [
+    const generic = [`I'm grateful for the care ${child ? 'we' : 'I'} received.`, `Thank you for looking after ${me}.`, `Thank you to everyone who helped ${me}.`];
+    const mids = p.says.length ? [
       `What stood out for ${child ? 'us' : 'me'} was ${says}.`,
       `I especially appreciated ${says}.`,
       `${count} I noticed: ${says}.`,
       `All of this made a real difference: ${says}.`,
       `I'd single out ${says}.`,
       `Special mention for ${says}.`
-    ];
+    ] : generic;
     const seoEnds = p.seo && p.seo.length ? [
       `If you're looking for ${p.seo[0]}, I'd say go and see them.`,
       `Happy to recommend them to anyone looking for ${p.seo[0]}.`,
@@ -853,7 +934,7 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
     const system = `You write short Google reviews for a dental clinic on behalf of a real patient, using ONLY the facts they selected.
 Rules:
 - First person, sounds like an ordinary patient, not marketing copy.${p.child ? ' The visit was for the patient\'s child: write from the parent\'s point of view and say "my child".' : ''}
-- Use only the facts provided. Do NOT invent details: no prices, numbers, timelines, before/after claims, medical claims, guarantees, staff names, or things not listed.
+- Use only the facts provided.${p.liked.length ? '' : ' The patient did not pick any specific points, so keep the review general: say what they came for and who looked after them, with a simple thank-you. Do NOT name any specific quality such as comfort, hygiene, price, speed or technology.'} Do NOT invent details: no prices, numbers, timelines, before/after claims, medical claims, guarantees, staff names, or things not listed.
 - Mention the clinic name "${C.clinicName}" (or just "Flosswork") once, naturally.
 - ${docLine}
 - ${p.seo && p.seo.length ? `Work in this exact phrase once, naturally, inside a sentence: "${p.seo[0]}". Do not mention the city anywhere else.` : 'Do not mention any city or location.'}
@@ -861,7 +942,7 @@ Rules:
 - No emojis, hashtags, quotation marks, bullet points, or headings. No "highly recommend" cliches, no "five stars".
 - Do not say you are an AI. Output ONLY the review text.`;
     const user = `Treatments: ${p.treatments.join('; ')}
-What the patient liked: ${p.liked.join('; ')}
+What the patient liked: ${p.liked.length ? p.liked.join('; ') : '(nothing specific selected)'}
 ${p.extra ? `Patient's own note (weave it in faithfully): ${p.extra}\n` : ''}Language: natural, simple Indian English
 Tone: ${pick(STYLES)}
 Length: ${pick(LENGTHS)}
@@ -974,8 +1055,14 @@ Variation code (make this review different from any other): ${p.seed}`;
       try { return document.execCommand('copy'); } catch (__) { return false; }
     }
   }
-  function openGoogle() {
+  // newTab = true: open Google in a new tab/window and keep this page open behind it. If the browser blocks the
+  // new tab, fall back to this tab so the patient still reaches Google.
+  function openGoogle(newTab) {
     sessionStorage.setItem('fw_went', '1');
+    if (newTab === true) {
+      const w = window.open(C.googleReviewUrl, '_blank');
+      if (w) { try { w.opener = null; } catch (_) { /* ignore */ } return; }
+    }
     window.location.href = C.googleReviewUrl;
   }
   const GO_SECONDS = 6;
@@ -1010,12 +1097,12 @@ Variation code (make this review different from any other): ${p.seed}`;
   $('#copyGo').onclick = async () => {
     const review = $('#review').value;
     const ok = await copyText(review);
-    if (ok) { openGoogle(); return; }              // copied: go straight to the Google review page
+    if (ok) { openGoogle(true); return; }          // copied: open the Google review page in a new tab
     // Copy was blocked (common inside in-app browsers): stay here so the patient can copy by hand first.
     show('s-go');
     showCopied(false, review);
   };
-  $('#openNow').onclick = openGoogle;
+  $('#openNow').onclick = () => openGoogle();
   $('#copyAgain').onclick = async () => {
     clearInterval(state.timer);
     const review = $('#review').value;
@@ -1025,7 +1112,7 @@ Variation code (make this review different from any other): ${p.seed}`;
   };
   // touching the review text means they want to read or copy it: stop the automatic open
   $('#manualText').addEventListener('pointerdown', () => pauseCountdown());
-  $('#ownGo').onclick = openGoogle;
+  $('#ownGo').onclick = () => openGoogle();
 
   /* ---------- welcome back from Google ---------- */
   function welcomeBack() {

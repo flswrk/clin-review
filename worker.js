@@ -8,14 +8,59 @@
 
 const hits = new Map(); // small per-instance rate limiter
 
-const STYLES = ['warm and heartfelt', 'short and crisp', 'conversational, like telling a friend',
-  'specific and detail-oriented', 'calm and appreciative', 'upbeat but natural'];
-const LENGTHS = ['exactly 2 sentences (about 30 to 40 words)', '3 sentences (about 50 to 60 words)',
-  '3 to 4 sentences (about 60 to 80 words)'];
-const STARTS = ['begin with how the patient felt', 'begin with the result or outcome',
-  'begin with the treatment', 'begin with the clinic atmosphere', 'begin with the doctor'];
+// ---- variety: every review gets a different combination of these directions, so the same picks never give the same text ----
+const STYLES = ['warm and heartfelt', 'short and crisp', 'conversational, like telling a friend', 'specific and detail-oriented',
+  'calm and appreciative', 'upbeat but natural', 'plain-spoken and sincere', 'thoughtful and measured', 'friendly and light',
+  'matter-of-fact with a warm finish', 'understated and genuine', 'enthusiastic without exclamation marks'];
+const LENGTHS = ['1 or 2 short sentences (about 20 to 30 words)', 'exactly 2 sentences (about 30 to 40 words)', '3 sentences (about 50 to 60 words)',
+  '3 to 4 sentences (about 60 to 80 words)', '4 sentences (about 70 to 90 words)'];
+const STARTS = ['begin with how the patient felt', 'begin with the result or outcome', 'begin with the treatment', 'begin with the clinic atmosphere',
+  'begin with the doctor', 'begin with one specific thing the patient liked', 'begin by speaking to future patients ("If you are thinking about...")',
+  'begin with the clinic name', 'begin with a short plain statement of what was done', 'begin mid-thought with what stood out most'];
+const RHYTHMS = ['mix one short sentence with longer ones', 'use medium-length sentences throughout', 'one long flowing sentence, then a short one', 'mostly short, simple sentences'];
+const CLOSINGS = ['end with a simple thank-you', 'end with a plain recommendation to others, without the word highly', 'end on the most important thing they liked',
+  'end without any sign-off or recommendation', 'end with one short warm sentence about how the visit felt'];
+const AVOID_OPENERS = ['I recently', 'I had', 'My experience', 'I visited', 'I went to', 'Thank you', 'Choosing', 'Big thanks', 'If you are', 'Dr.'];
+const FLAVOR = ['honestly', 'overall', 'simply', 'genuinely', 'truly', 'especially', 'particularly', 'clearly'];
+const SIM_MAX = 0.35;        // 3-word-phrase overlap above this = "too similar to a recent review"
+const KEEP_RECENT = 40;
 
 const pick = a => a[Math.floor(Math.random() * a.length)];
+function sample(a, n) { const b = [...a], out = []; while (out.length < n && b.length) out.push(b.splice(Math.floor(Math.random() * b.length), 1)[0]); return out; }
+function makeVariant(liked) {
+  if (!liked.length) {
+    return { tone: pick(STYLES), length: pick(LENGTHS.slice(0, 3)), start: pick(STARTS.filter(s => !/liked|stood out/.test(s))), rhythm: pick(RHYTHMS), closing: pick(CLOSINGS),
+             focus: 'keep it general: no specific qualities, only what they came for, who looked after them and a simple thank-you', words: sample(FLAVOR, 2), avoid: sample(AVOID_OPENERS, 3) };
+  }
+  const lead = pick(liked);
+  const focus = liked.length > 1
+    ? pick([`make "${lead}" the main point and fold the other points into one short mention`,
+            `mention every selected point, starting with "${lead}"`,
+            `mention every selected point, with "${lead}" coming last`])
+    : 'mention the selected point naturally';
+  return { tone: pick(STYLES), length: pick(LENGTHS), start: pick(STARTS), rhythm: pick(RHYTHMS), closing: pick(CLOSINGS),
+           focus, words: sample(FLAVOR, 2), avoid: sample(AVOID_OPENERS, 3) };
+}
+
+// ---- recent reviews: used to steer away from repeats and to catch near-duplicates ----
+let RECENT = [];   // [{ t: text, open: first five words }]  (kept in memory; also in KV if a KV namespace named RECENT is bound)
+const norm = s => s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+function grams(s, n = 3) { const w = norm(s), set = new Set(); for (let i = 0; i + n <= w.length; i++) set.add(w.slice(i, i + n).join(' ')); return set; }
+function similarity(a, b) {
+  const A = grams(a), B = grams(b); if (!A.size || !B.size) return 0;
+  let inter = 0; for (const g of A) if (B.has(g)) inter++;
+  return inter / (A.size + B.size - inter);
+}
+function mostSimilar(text, list) { let best = { s: 0, t: '' }; for (const r of list) { const s = similarity(text, r.t); if (s > best.s) best = { s, t: r.t }; } return best; }
+async function loadRecent(env) {
+  if (env.RECENT) { try { const v = await env.RECENT.get('recent'); if (v) { const a = JSON.parse(v); if (Array.isArray(a)) RECENT = a; } } catch { /* keep memory copy */ } }
+  return RECENT;
+}
+function saveRecent(env, ctx, text) {
+  RECENT.push({ t: text.slice(0, 500), open: text.split(/\s+/).slice(0, 5).join(' ') });
+  if (RECENT.length > KEEP_RECENT) RECENT = RECENT.slice(-KEEP_RECENT);
+  if (env.RECENT) { const p = env.RECENT.put('recent', JSON.stringify(RECENT)).catch(() => {}); if (ctx && ctx.waitUntil) ctx.waitUntil(p); }
+}
 const clean = (s, n) => String(s ?? '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, n);
 const json = (o, status = 200) => new Response(JSON.stringify(o),
   { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
@@ -82,7 +127,7 @@ async function llm(env, messages, opts = {}) {
 }
 
 export default {
-  async fetch(req, env) {
+  async fetch(req, env, ctx) {
     const url = new URL(req.url);
     const ip = req.headers.get('CF-Connecting-IP') || 'x';
 
@@ -114,7 +159,7 @@ export default {
       const seo = Array.isArray(b.seo) ? b.seo.slice(0, 1).map(x => clean(x, 60)).filter(Boolean) : [];
       const extra = clean(b.extra, 200);
       const isTeam = !!b.isTeam, child = !!b.child;
-      if (!treatments.length || !liked.length) return json({ error: 'missing fields' }, 400);
+      if (!treatments.length) return json({ error: 'missing fields' }, 400);      // picking what they liked is optional
 
       const docLine = !doctors.length
         ? 'Refer to "the doctors and team" without naming anyone.'
@@ -126,7 +171,7 @@ export default {
 `You write short Google reviews for a dental clinic on behalf of a real patient, using ONLY the facts they selected.
 Rules:
 - First person, sounds like an ordinary patient, not marketing copy.${child ? ' The visit was for the patient\'s child: write from the parent\'s point of view and say "my child".' : ''}
-- Use only the facts provided. Do NOT invent details: no prices, numbers, timelines, before/after claims, medical claims, guarantees, staff names, or things not listed.
+- Use only the facts provided.${liked.length ? '' : ' The patient did not pick any specific points, so keep the review general: say what they came for and who looked after them, with a simple thank-you. Do NOT name any specific quality such as comfort, hygiene, price, speed or technology.'} Do NOT invent details: no prices, numbers, timelines, before/after claims, medical claims, guarantees, staff names, or things not listed.
 - Mention the clinic name "Flosswork Dental Clinic" (or just "Flosswork") once, naturally.
 - ${docLine}
 - ${seo.length ? `Work in this exact phrase once, naturally, inside a sentence: "${seo[0]}". Do not mention the city anywhere else.` : 'Do not mention any city or location.'}
@@ -134,21 +179,44 @@ Rules:
 - No emojis, hashtags, quotation marks, bullet points, or headings. No "highly recommend" cliches, no "five stars".
 - Do not say you are an AI. Output ONLY the review text.`;
 
+      const recent = await loadRecent(env);
+      const v = makeVariant(liked);
+      const avoid = [...new Set([...v.avoid, ...recent.slice(-8).map(r => r.open)])];
       const user =
 `Treatments: ${treatments.join('; ')}
-What the patient liked: ${liked.join('; ')}
+What the patient liked: ${liked.length ? liked.join('; ') : '(nothing specific selected)'}
 ${extra ? `Patient's own note (weave it in faithfully): ${extra}\n` : ''}Language: natural, simple Indian English
-Tone: ${pick(STYLES)}
-Length: ${pick(LENGTHS)}
-Structure: ${pick(STARTS)}
+Tone: ${v.tone}
+Length: ${v.length}
+Opening: ${v.start}
+Sentence rhythm: ${v.rhythm}
+Closing: ${v.closing}
+Focus: ${v.focus}
+If they fit naturally, you may use each of these words once: ${v.words.join(', ')}
+Do not start the review with any of these: ${avoid.map(a => `"${a}"`).join(', ')}
 Variation code (make this review different from any other): ${clean(b.seed, 20)}`;
 
+      const startedAt = Date.now();
+      const tidy = t => t.replace(/^["'“”\s]+|["'“”\s]+$/g, '').replace(/^(review|here'?s.*?):\s*/i, '').trim();
       const r = await llm(env, [{ role: 'system', content: system }, { role: 'user', content: user }]);
       if (!r.ok) return json({ error: r.error, fatal: !!r.fatal }, r.keyConfigured === false ? 500 : 502);
 
-      const text = r.text.replace(/^["'“”\s]+|["'“”\s]+$/g, '').replace(/^(review|here'?s.*?):\s*/i, '').trim();
+      let text = tidy(r.text), model = r.model, fellBack = !!r.fellBack;
       if (text.length < 20) return json({ error: 'the AI returned an empty answer' }, 502);
-      return json({ review: text, model: r.model, ms: r.ms, fellBack: !!r.fellBack });
+
+      // too close to a recent review? ask once for a completely different version (only if there is time left)
+      let best = mostSimilar(text, recent), regenerated = false;
+      if (best.s >= SIM_MAX && Date.now() - startedAt < 4500) {
+        const retryUser = user + `\nImportant: a first draft was too close to an existing review. Write a completely different version: a different opening, a different sentence order and different wording. Do not copy phrases from this existing review:\n"${best.t}"`;
+        const r2 = await llm(env, [{ role: 'system', content: system }, { role: 'user', content: retryUser }]);
+        if (r2.ok) {
+          const t2 = tidy(r2.text);
+          if (t2.length >= 20) { const s2 = mostSimilar(t2, recent).s; regenerated = true; if (s2 < best.s) { text = t2; best = { s: s2, t: best.t }; model = r2.model; fellBack = fellBack || !!r2.fellBack; } }
+        }
+      }
+      saveRecent(env, ctx, text);
+      return json({ review: text, model, ms: Date.now() - startedAt, fellBack, similarity: Number(best.s.toFixed(2)), regenerated,
+                    variant: { tone: v.tone, length: v.length, opening: v.start, rhythm: v.rhythm, closing: v.closing } });
     }
 
     return env.ASSETS.fetch(req);
