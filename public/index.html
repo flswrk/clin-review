@@ -14,12 +14,12 @@
 window.FW = {
   clinicName: "Flosswork Dental Clinic",
 
-  // 0) Clinic logo: shown on the welcome card and the thank-you card only (square logos work well). Paste a data URI or a file path
-  //    like "logo.png". Leave "" (or if it fails to load) and the clinic name is shown instead.
-  logo: "logo.svg",
+  // 0) Clinic logo: shown on the welcome card and the thank-you card only. Leave "" and the page looks for a file named
+  //    logo.svg, logo.png, logo.webp or logo.jpg next to this page; or set a file path / data URI here.
+  //    If no logo is found (or it fails to load) the clinic name is shown instead.
+  logo: "",
 
-  // 1) Your Google review link. Replace YOUR_PLACE_ID with your Place ID
-  //    (Google's "Place ID Finder"), or paste the "Get more reviews" link from your Business Profile.
+  // 1) Your Google review link (already set to the clinic's own link).
   googleReviewUrl: "https://g.page/r/Ccqeas5-UXFzEBM/review",
 
   // 2) Doctors (patients can pick several, including "The whole team").
@@ -130,9 +130,7 @@ button{cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-se
 @media (min-width:600px){
   html,body{background:#F3EEEA}
   .shell{min-height:0;margin:24px auto;padding-top:0;border-radius:28px;box-shadow:0 10px 40px rgba(45,44,42,.08);overflow:clip}
-  #s-treatment .grid{grid-template-rows:repeat(var(--rows,4),82px)}
 }
-
 /* ---------- header ---------- */
 .top{position:relative;padding:8px 14px 0}
 .topbar{display:flex;align-items:center;justify-content:space-between;min-height:54px}
@@ -143,7 +141,6 @@ button{cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-se
 .brand{font-weight:800;font-size:20px;letter-spacing:-.4px;white-space:nowrap}
 .brand span{font-weight:500;font-size:12px;color:var(--mut);margin-left:4px;letter-spacing:0}
 body[data-s="s-welcome"] .mid{visibility:hidden}
-
 /* smile meter */
 .meter{width:280px;max-width:100%;margin:0 auto 2px}
 .meter svg{display:block;width:100%;height:auto;overflow:visible}
@@ -156,14 +153,12 @@ body[data-s="s-welcome"] .meter,body[data-s="s-own"] .meter{display:none}
 .meter.full .mstar{animation:starpop .9s cubic-bezier(.34,1.56,.64,1)}
 @keyframes twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(14deg)}}
 @keyframes starpop{0%{transform:scale(.2) rotate(-60deg)}60%{transform:scale(1.6) rotate(20deg)}100%{transform:scale(1.15) rotate(0)}}
-
 /* ---------- screens ---------- */
 main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction:column}
 .screen{display:none;padding:6px 22px 0}
 .screen.active{display:block;flex:1}
 .screen.enter{animation:enter .45s cubic-bezier(.22,1,.36,1)}
 @keyframes enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-
 .q{padding:8px 4px 14px}
 .q.center{text-align:center;padding:22px 8px 8px}
 .q h1{margin:0;font-size:36px;line-height:1.1;font-weight:800;letter-spacing:-.9px}
@@ -172,7 +167,6 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .q p{margin:8px 0 0;font-size:16.5px;line-height:1.45;font-weight:500;color:var(--mut)}
 .tag{display:inline-block;padding:5px 13px;border-radius:14px;background:var(--tint);color:var(--blue);font-size:13px;font-weight:700;margin-bottom:10px}
 .fine{margin:2px 0 0;text-align:center;font-size:13px;color:var(--mut)}
-
 /* hero card (welcome shows the clinic logo, thank-you shows the full smile) */
 .hero{position:relative;height:250px;margin:8px 0 0;border-radius:40px;background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:0 28px;text-align:center}
 .hero .decor{position:absolute;inset:0;width:100%;height:100%}
@@ -180,21 +174,21 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .hero-logo{position:relative;height:100%;width:auto;max-width:94%;object-fit:contain}
 .decor .tw1,.decor .tw3{transform-box:fill-box;transform-origin:center;animation:twinkle 3.2s ease-in-out infinite}
 .decor .tw3{animation-delay:1.1s}
-.decor .tw1{fill:var(--star)}.decor .tw3{fill:var(--yel)}
-.decor .tw2{fill:var(--sky)}.decor .tw4{fill:var(--blue)}
+.decor .tw1{fill:var(--star)}
+.decor .tw3{fill:var(--yel)}
+.decor .tw2{fill:var(--sky)}
+.decor .tw4{fill:var(--blue)}
 .thanks-hero{height:230px}
 .smile-track{fill:none;stroke:var(--track);stroke-width:24;stroke-linecap:round}
 .smile-full{fill:none;stroke:var(--blue);stroke-width:24;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100}
 .screen.active .smile-full{animation:drawSmile 1.1s .25s cubic-bezier(.34,1.2,.64,1) forwards}
 @keyframes drawSmile{to{stroke-dashoffset:0}}
-
 /* ---------- sticky bottom action bar ---------- */
 .cta{position:sticky;bottom:0;margin:18px -22px 0;padding:12px 22px calc(26px + env(safe-area-inset-bottom,0px));background:#fff;display:flex;flex-direction:column;gap:8px;z-index:3}
 .meta{text-align:center;font-size:14.5px;font-weight:700;color:var(--blue)}
 .meta b{display:inline-block}
 .meta b.bump{animation:bump .35s cubic-bezier(.34,1.56,.64,1)}
 @keyframes bump{50%{transform:scale(1.6)}}
-
 /* ---------- buttons ---------- */
 .btn{position:relative;overflow:hidden;width:100%;min-height:60px;border:3px solid transparent;border-radius:30px;background:var(--blue);color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:9px;transition:transform .12s,opacity .2s,background .2s}
 .btn:active{transform:scale(.97)}
@@ -210,7 +204,6 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 @keyframes rip{to{transform:scale(1);opacity:0}}
 .btn.spin svg{animation:spin .6s ease}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 /* ---------- selectable cards ---------- */
 .list{display:flex;flex-direction:column;gap:12px;padding-top:4px}
 .opt{position:relative;width:100%;min-height:76px;display:flex;align-items:center;gap:12px;padding:0 16px 0 20px;background:#fff;color:var(--ink);border:3px solid var(--bd);border-radius:18px;text-align:left;transition:transform .15s,border-color .2s,background .2s}
@@ -233,7 +226,6 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 @keyframes pop{0%{transform:scale(.95)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
 .shake{animation:shake .32s}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
-
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-top:6px}
 .tcard{position:relative;min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:4px;padding:0 9px 0 14px;background:#fff;color:var(--ink);border:3px solid var(--bd);border-radius:18px;text-align:left;transition:transform .15s,border-color .2s}
 .tl{flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:600;line-height:1.15;overflow-wrap:break-word;hyphens:manual}
@@ -241,8 +233,6 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .ico svg{width:30px;height:30px}
 .badge{position:absolute;top:-10px;left:-10px;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--blue);display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
 .badge svg{width:12px;height:12px;stroke:var(--blue)}
-
-
 .grp{margin:20px 0 9px;font-size:13.5px;font-weight:700;color:var(--mut)}
 .chips{display:flex;flex-wrap:wrap;gap:9px}
 .chip{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;background:#fff;color:var(--ink);border:3px solid var(--bd);border-radius:999px;font-size:15px;font-weight:600;transition:transform .12s,background .2s,border-color .2s,color .2s}
@@ -251,26 +241,22 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .ck{display:inline-flex;width:0;overflow:hidden;transition:width .22s,margin .22s}
 .ck svg{width:16px;height:16px;min-width:16px}
 .chip[aria-pressed="true"] .ck{width:16px;margin-right:6px}
-
 .opt.stag,.tcard.stag,.chip.stag,.ideas li.stag,.steps li.stag{animation:stag .5s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes stag{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
-
 .field{display:block;margin:22px 0 8px;font-size:14px;font-weight:700;color:var(--mut)}
 .field em{font-weight:500}
-#extra{display:block;width:100%;padding:14px 16px;border:3px solid var(--bd);border-radius:18px;background:#fff;color:var(--ink);font-size:16px;line-height:1.5;resize:none}
-#extra:focus{outline:none;border-color:var(--blue)}
-
 /* ---------- own words ---------- */
 .ideas{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
 .ideas li{display:flex;align-items:center;gap:14px;padding:16px 18px;border:3px solid var(--bd);border-radius:18px;font-size:16px;font-weight:600}
 .ideas li::before{content:"";flex:none;width:14px;height:14px;border-radius:50%;background:var(--star)}
 .ideas li:nth-child(2)::before{background:var(--sky)}
 .ideas li:nth-child(3)::before{background:var(--purp)}
-
 /* ---------- writing + review ---------- */
 .skel{display:flex;flex-direction:column;gap:14px;padding:26px 24px;border-radius:32px;background:var(--card)}
 .skel i{display:block;height:14px;border-radius:7px;background:linear-gradient(90deg,var(--track) 25%,#F3EAE5 50%,var(--track) 75%);background-size:300% 100%;animation:shim 1.3s infinite linear}
-.skel i:nth-child(2){width:90%}.skel i:nth-child(3){width:72%}.skel i:nth-child(4){width:84%}
+.skel i:nth-child(2){width:90%}
+.skel i:nth-child(3){width:72%}
+.skel i:nth-child(4){width:84%}
 @keyframes shim{from{background-position:100% 0}to{background-position:0 0}}
 #review,#manualText{display:block;width:100%;padding:24px;border:3px solid transparent;border-radius:32px;background:var(--card);color:var(--ink);font-size:17.5px;line-height:1.55;font-weight:500;resize:none;overflow:hidden}
 #review:focus,#manualText:focus{outline:none;border-color:var(--blue)}
@@ -278,7 +264,6 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 @keyframes rise{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
 .row2{display:flex;gap:10px;margin-top:12px}
 .row2 .btn{flex:1;font-size:14px;padding:0 8px;gap:6px;white-space:nowrap}
-
 /* ---------- copied ---------- */
 .steps{counter-reset:s;list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
 .steps li{counter-increment:s;display:flex;align-items:center;gap:14px;padding:14px 18px;border:3px solid var(--bd);border-radius:18px;font-size:15.5px;font-weight:600}
@@ -290,14 +275,12 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .cdbar i{display:block;height:100%;width:0;border-radius:5px;background:var(--blue);transition:width 1s linear}
 .cd p{margin:8px 0 0;text-align:center;font-size:14px;font-weight:600;color:var(--mut)}
 .soft{display:block;text-align:center;margin:6px 0 0;font-size:14px;color:var(--mut);text-decoration:underline;min-height:44px;line-height:44px}
-
 /* ---------- confetti ---------- */
 #confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}
 #confetti i{position:absolute;top:-24px;width:11px;height:16px;border-radius:3px;animation:fall linear forwards}
 #confetti i.c-dot{width:12px;height:12px;border-radius:50%}
 #confetti i.c-star{width:18px;height:18px;border-radius:0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
-
 /* ---------- AI status dot + details (top right) ---------- */
 #dbg{position:static;text-align:left;font:12.5px/1.5 'Figtree',system-ui,sans-serif}
 #dbgPill{position:relative;width:30px;height:30px;padding:0;border:0;background:transparent;cursor:pointer}
@@ -308,76 +291,54 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 #dbgBody pre{margin:0 0 10px;white-space:pre-wrap;word-break:break-word;font:inherit}
 .dbgRow{display:flex;gap:6px;margin-bottom:10px}
 .dbgRow button{flex:1;border:1px solid var(--bd);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 8px;font:600 12px 'Figtree',system-ui,sans-serif;cursor:pointer}
-
 :focus-visible{outline:3px solid var(--sky);outline-offset:2px}
-@media (max-width:420px){.tl{font-size:13.5px}.ico{width:34px;height:34px}.ico svg{width:26px;height:26px}.tcard{padding:0 8px 0 12px}}
+@media (max-width:420px){
+  .tl{font-size:13.5px}
+  .ico{width:34px;height:34px}
+  .ico svg{width:26px;height:26px}
+  .tcard{padding:0 8px 0 12px}
+}
 @media (max-width:359px){
-  .screen{padding-left:14px;padding-right:14px}.cta{margin-left:-14px;margin-right:-14px;padding-left:14px;padding-right:14px}
-  .q h1{font-size:30px}.q h2{font-size:28px}.q h2.big{font-size:36px}.hero{height:210px}.hero-name{font-size:28px}.grid{gap:10px}.tl{font-size:13.5px}.tcard{padding:0 7px 0 11px}.ico{width:34px;height:34px}.ico svg{width:25px;height:25px}.tl{font-size:13px}
+  .screen{padding-left:14px;padding-right:14px}
+  .cta{margin-left:-14px;margin-right:-14px;padding-left:14px;padding-right:14px}
+  .q h1{font-size:30px}
+  .q h2{font-size:28px}
+  .q h2.big{font-size:36px}
+  .hero{height:210px}
+  .hero-name{font-size:28px}
+  .grid{gap:10px}
+  .tl{font-size:13.5px}
+  .tcard{padding:0 7px 0 11px}
+  .ico{width:34px;height:34px}
+  .ico svg{width:25px;height:25px}
+  .tl{font-size:13px}
 }
-@media (max-height:640px){.hero{height:190px}}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}#confetti{display:none}}
-
-
-/* treatment screen: all eight cards fit on the phone screen; the grid shares whatever height is left */
-#s-treatment.active{display:flex;flex-direction:column}
-#s-treatment .q{padding-bottom:8px}
-#s-treatment .q h2{font-size:30px}
-#s-treatment .q p{margin-top:4px}
-#s-treatment .grid{flex:1;max-height:520px;grid-template-rows:repeat(var(--rows,4),minmax(50px,1fr));padding-top:4px}
-#s-treatment .tcard{min-height:0;height:100%}
-#s-treatment .cta{margin-top:auto}
+@media (max-height:640px){
+  .hero{height:190px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  #confetti{display:none}
+}
 @media (max-height:700px){
-  .meter{width:210px}.top{padding-top:4px}.topbar{min-height:46px}
-  #s-treatment .q h2{font-size:26px}#s-treatment .q p{font-size:14.5px}
-  #s-treatment .cta{padding-top:8px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));gap:6px}
-  #s-treatment .btn{min-height:52px}
+  .meter{width:210px}
+  .top{padding-top:4px}
+  .topbar{min-height:46px}
 }
-
 @media (max-height:600px){
-  .meter{width:150px}.top{padding-top:2px}.topbar{min-height:42px}
-  #s-treatment .q{padding-top:2px;padding-bottom:4px}
-  #s-treatment .q h2{font-size:23px}#s-treatment .q p{font-size:13.5px;margin-top:2px}
-  #s-treatment .grid{gap:8px;grid-template-rows:repeat(var(--rows,4),minmax(40px,1fr))}
-  #s-treatment .tcard{padding-top:0;padding-bottom:0}
-  #s-treatment .cta{margin-top:6px;padding-top:6px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));gap:4px}
-  #s-treatment .btn{min-height:48px}
-  #s-treatment .meta{font-size:13px}
+  .meter{width:150px}
+  .top{padding-top:2px}
+  .topbar{min-height:42px}
 }
-
-#s-treatment .q h2{font-size:28px}
-@media (max-width:359px){.brand{font-size:18px}.brand span{font-size:11px;margin-left:3px}}
+@media (max-width:359px){
+  .brand{font-size:18px}
+  .brand span{font-size:11px;margin-left:3px}
+}
 @media (max-width:420px) and (min-height:760px){
-  .ico{width:46px;height:46px}.ico svg{width:36px;height:36px}
-  #s-treatment .tl{font-size:14px}
+  .ico{width:46px;height:46px}
+  .ico svg{width:36px;height:36px}
 }
-
-
-@media (min-width:600px){#s-treatment .grid{grid-template-rows:repeat(var(--rows,4),clamp(52px,calc((100dvh - 540px) / var(--rows,4)),82px))}}
-
 .tcard.on .badge svg{animation:draw .35s .05s ease-out forwards}
-
-/* "Something else?" box: same look as "Anything else?" on the next page */
-#s-treatment .other-wrap .field{margin:14px 0 6px}
-#otherInput{display:block;width:100%;padding:14px 16px;border:3px solid var(--bd);border-radius:18px;background:#fff;color:var(--ink);font:16px/1.5 'Figtree',system-ui,sans-serif}
-#otherInput:focus{outline:none;border-color:var(--blue)}
-#otherInput:disabled{background:var(--card);opacity:.7}
-@media (max-height:700px){#s-treatment .other-wrap .field{margin:8px 0 4px;font-size:13px}#otherInput{padding:10px 14px}}
-@media (max-height:600px){#s-treatment .other-wrap .field{margin:5px 0 3px;font-size:12.5px}#otherInput{padding:8px 12px;font-size:15px}}
-
-@media (max-height:700px){
-  #s-treatment .q{padding-top:2px;padding-bottom:4px}
-  #s-treatment .grid{gap:8px;grid-template-rows:repeat(var(--rows,4),minmax(46px,1fr))}
-  #s-treatment .other-wrap .field{margin:6px 0 3px}
-  #otherInput{padding:9px 14px}
-}
-@media (max-height:600px){
-  #s-treatment .grid{gap:6px;grid-template-rows:repeat(var(--rows,4),minmax(40px,1fr))}
-  #s-treatment .q h2{font-size:22px}
-  #s-treatment .other-wrap .field{margin:4px 0 2px}
-  #otherInput{padding:7px 12px}
-}
-
 /* thank-you card: it hugs its content, with even padding all round and the same side margins as every other card */
 .hero-thanks{height:auto;min-height:0;margin:14px 0 0;padding:54px 30px}
 .hero-thanks .dc{position:absolute;pointer-events:none}
@@ -391,89 +352,97 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .hero-thanks.has-logo{padding:6px 24px}
 #s-thanks .q.center{padding:26px 6px 4px}
 #s-thanks .fine{margin:14px 0 0}
-
 /* thank-you page: breathing room under the last line (no action bar on this page) */
 #s-thanks{padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
-
-/* "What made you smile?": everything fits on one phone screen (choices sit in two columns) */
-#s-liked.active{display:flex;flex-direction:column}
-#s-liked .q{padding-bottom:6px}
-#s-liked .q h2{font-size:30px}
-#s-liked .q p{margin-top:3px}
-#s-liked .grp{margin:12px 0 7px}
-#s-liked .chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-#s-liked .chip{justify-content:center;text-align:center;min-height:46px;padding:4px 10px;border-radius:23px;font-size:14px;line-height:1.15}
-#s-liked .field{margin:12px 0 6px}
-#extra{height:64px}
-#s-liked .cta{margin-top:auto}
-@media (max-height:790px){
-  #s-liked .q h2{font-size:27px}
-  #s-liked .grp{margin:8px 0 5px}
-  #s-liked .chip{min-height:42px}
-  #s-liked .chips{gap:7px}
-  #s-liked .field{margin:8px 0 4px}
-  #extra{height:50px}
-  #s-liked .cta{padding-top:6px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
-}
-@media (max-height:700px){
-  #s-liked .q h2{font-size:26px}#s-liked .q p{font-size:14.5px}
-  #s-liked .grp{margin:8px 0 5px;font-size:12.5px}
-  #s-liked .chips{gap:6px}
-  #s-liked .chip{min-height:42px;font-size:13.5px}
-  #s-liked .field{margin:8px 0 4px;font-size:13px}
-  #extra{height:44px;padding:9px 14px}
-  #s-liked .cta{padding-top:8px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));gap:6px}
-  #s-liked .btn{min-height:52px}
-}
-@media (max-height:600px){
-  #s-liked .q h2{font-size:22px}#s-liked .q p{font-size:13.5px;margin-top:1px}
-  #s-liked .grp{margin:5px 0 3px;font-size:12px}
-  #s-liked .chips{gap:5px}
-  #s-liked .chip{min-height:38px;font-size:13px;padding:2px 8px}
-  #s-liked .field{margin:5px 0 3px;font-size:12px}
-  #extra{height:38px;padding:7px 12px;font-size:15px}
-  #s-liked .cta{padding-top:6px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));gap:4px}
-  #s-liked .btn{min-height:48px}
-  #s-liked .meta{font-size:13px}
-}
-
-/* "Anything else?" box: no scroll bar or arrows (long text still scrolls quietly inside) */
-#extra{overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
-#extra::-webkit-scrollbar{display:none;width:0;height:0}
-
-/* doctors page: longer role lines stay on one line, and the page fits on a short phone screen */
 @media (max-width:420px){
   .opt{gap:9px;padding:0 12px 0 16px}
   .otxt small{font-size:12.5px}
   .ini{width:36px;height:36px;font-size:13px}
   .ind{width:26px;height:26px}
 }
-#s-doctor.active{display:flex;flex-direction:column}
-#s-doctor .cta{margin-top:auto}
 @media (max-height:790px){
-  #s-doctor .q h2{font-size:28px}
-  #s-doctor .list{gap:9px}
   .opt{min-height:68px}
-  #s-doctor .cta{padding-top:6px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 }
 @media (max-height:700px){
-  #s-doctor .q{padding-top:2px;padding-bottom:6px}
-  #s-doctor .q h2{font-size:26px}#s-doctor .q p{font-size:14.5px}
-  #s-doctor .list{gap:8px;padding-top:2px}
   .opt{min-height:60px}
   .otxt .nm{font-size:16.5px}
-  #s-doctor .btn{min-height:52px}
 }
 @media (max-height:600px){
-  #s-doctor .q h2{font-size:22px}#s-doctor .q p{font-size:13.5px}
-  #s-doctor .list{gap:6px}
   .opt{min-height:54px}
-  .otxt .nm{font-size:15.5px}.otxt small{font-size:12px}
-  #s-doctor .btn{min-height:48px}
+  .otxt .nm{font-size:15.5px}
+  .otxt small{font-size:12px}
 }
-
 /* "Writing your review" screen: space under the loading card (this screen has no action bar yet) */
 #loading{padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+
+/* ===== The three pick pages (doctors, treatments, what made you smile) share ONE layout ===== */
+.pick.active{display:flex;flex-direction:column}
+.pick .q{padding:8px 4px 8px}
+.pick .q h2{font-size:28px}
+.pick .q p{margin-top:4px;font-size:16.5px}
+.pick .cta{margin-top:auto;padding:12px 22px calc(26px + env(safe-area-inset-bottom,0px));gap:8px}
+.pick .btn{min-height:60px}
+.pick .field{margin:14px 0 6px;font-size:14px}
+.pick .grp{margin:12px 0 7px;font-size:13.5px}
+.pick .q + .grp{margin-top:4px}
+/* one text box style for "Something else?" and "Anything else?" */
+#extra,#otherInput{display:block;width:100%;padding:14px 16px;border:3px solid var(--bd);border-radius:18px;background:#fff;color:var(--ink);font:16px/1.5 'Figtree',system-ui,sans-serif}
+#extra:focus,#otherInput:focus{outline:none;border-color:var(--blue)}
+#otherInput:disabled{background:var(--card);opacity:.7}
+/* doctors */
+.pick .list{gap:12px;padding-top:4px}
+/* treatments: the cards share the free height */
+.pick .grid{flex:1;max-height:520px;gap:12px;padding-top:4px;grid-template-rows:repeat(var(--rows,4),minmax(50px,1fr))}
+.pick .tcard{min-height:0;height:100%}
+.tl{font-size:14.5px}
+/* what made you smile: the choices share the free height too, and use the same rounded-rectangle shape as the cards */
+.pick .chips{display:grid;flex:1 1 0;max-height:270px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(44px,1fr));gap:12px}
+.pick .chip{height:100%;min-height:0;justify-content:center;text-align:center;padding:4px 10px;border-radius:18px;font-size:14px;line-height:1.15}
+
+@media (max-height:790px){
+  .pick .q{padding:4px 4px 4px}
+  .pick .cta{padding-top:8px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  .pick .btn{min-height:58px}
+  .pick .field{margin:8px 0 4px}
+  .pick .grp{margin:8px 0 4px}
+  #extra,#otherInput{padding:12px 16px}
+  .pick .list{gap:9px}
+  .opt{min-height:68px}
+  .pick .grid,.pick .chips{gap:10px}
+  .pick .chips{grid-template-rows:repeat(2,minmax(40px,1fr))}
+}
+@media (max-height:700px){
+  .pick .q{padding:2px 4px 4px}
+  .pick .q h2{font-size:26px}.pick .q p{font-size:14.5px}
+  .pick .cta{padding-top:8px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));gap:6px}
+  .pick .btn{min-height:52px}
+  .pick .field{margin:6px 0 3px;font-size:13px}
+  .pick .grp{margin:6px 0 4px;font-size:12.5px}
+  #extra,#otherInput{padding:9px 14px}
+  .pick .list{gap:8px;padding-top:2px}
+  .opt{min-height:60px}.otxt .nm{font-size:16.5px}
+  .pick .grid{gap:8px;grid-template-rows:repeat(var(--rows,4),minmax(46px,1fr))}
+  .pick .chips{gap:8px;grid-template-rows:repeat(2,minmax(38px,1fr))}
+  .pick .chip{font-size:13px;line-height:1.1;padding:1px 8px}
+}
+@media (max-height:600px){
+  .pick .q h2{font-size:22px}.pick .q p{font-size:13.5px;margin-top:2px}
+  .pick .cta{padding-top:6px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));gap:4px}
+  .pick .btn{min-height:48px}.pick .meta{font-size:13px}
+  .pick .field{margin:5px 0 3px;font-size:12.5px}
+  .pick .grp{margin:5px 0 3px;font-size:12px}
+  #extra,#otherInput{padding:7px 12px;font-size:15px}
+  .pick .list{gap:6px}
+  .opt{min-height:54px}.otxt .nm{font-size:15.5px}.otxt small{font-size:12px}
+  .pick .grid{gap:6px;grid-template-rows:repeat(var(--rows,4),minmax(40px,1fr))}
+  .pick .chips{gap:6px;grid-template-rows:repeat(2,minmax(36px,1fr))}
+  .pick .chip{font-size:13px;padding:2px 8px}
+}
+@media (max-width:420px){.pick .tl{font-size:13.5px}}
+@media (min-width:600px){
+  .pick .grid{flex:none;max-height:none;grid-template-rows:repeat(var(--rows,4),clamp(52px,calc((100dvh - 540px) / var(--rows,4)),82px))}
+  .pick .chips{flex:none;max-height:none;grid-template-rows:repeat(2,64px)}
+}
 </style>
 </head>
 <body data-s="s-welcome">
@@ -538,14 +507,14 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
   </section>
 
   <!-- DOCTOR -->
-  <section id="s-doctor" class="screen">
+  <section id="s-doctor" class="screen pick">
     <div class="q"><h2>Who looked after you?</h2><p>Pick everyone who helped.</p></div>
     <div id="doctorList" class="list"></div>
     <div class="cta"><div class="meta"><b id="docN">0</b> selected</div><button class="btn primary" id="doctorNext" type="button" disabled>Next</button></div>
   </section>
 
   <!-- TREATMENT -->
-  <section id="s-treatment" class="screen">
+  <section id="s-treatment" class="screen pick">
     <div class="q"><h2>What did we work on?</h2><p>Pick up to <span id="maxT">3</span>.</p></div>
     <div id="treatmentList" class="grid"></div>
     <div class="other-wrap" id="otherWrap">
@@ -556,7 +525,7 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
   </section>
 
   <!-- LIKED: what made you smile -->
-  <section id="s-liked" class="screen">
+  <section id="s-liked" class="screen pick">
     <div class="q"><h2>What made you smile?</h2><p>Pick what felt true. Up to <span id="maxN">5</span>.</p></div>
 
     <h3 class="grp">About your treatment</h3>
@@ -565,7 +534,7 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
     <div id="likedClinic" class="chips"></div>
 
     <label class="field" for="extra">Anything else? <em>(optional)</em></label>
-    <textarea id="extra" rows="2" maxlength="200" enterkeyhint="done" autocapitalize="sentences" placeholder="For example: I was nervous, but felt calm throughout."></textarea>
+    <input id="extra" type="text" maxlength="200" autocomplete="off" enterkeyhint="done" autocapitalize="sentences" placeholder="For example: I felt calm">
 
     <div class="cta"><div class="meta"><b id="likeN">0</b> of <span id="maxN2">5</span> selected</div><button class="btn primary" id="writeBtn" type="button">Write my review</button></div>
   </section>
@@ -683,15 +652,27 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
   /* ---------- logo (welcome + thank-you cards only). Falls back to the clinic name if there is no logo or it fails to load ---------- */
   const tm = s => String(s).replace(/Flosswork(?!™)/g, 'Flosswork™');   // display only
   $('#heroName').textContent = tm(C.clinicName); $('#heroName2').textContent = tm(C.clinicName);
-  if (C.logo) {
-    const useLogo = (img, nameEl) => {
+  // Look for the logo: the configured one, or (if none is configured) logo.svg / logo.png / logo.webp / logo.jpg beside the page.
+  function findLogo(list, done) {
+    let i = 0;
+    const next = () => {
+      if (i >= list.length) return done(null);
+      const probe = new Image();
+      probe.onload = () => done(list[i]);
+      probe.onerror = () => { i++; next(); };
+      probe.src = list[i];
+    };
+    next();
+  }
+  findLogo(C.logo ? [C.logo] : ['logo.svg', 'logo.png', 'logo.webp', 'logo.jpg'], src => {
+    if (!src) return;
+    [['#heroLogo', '#heroName'], ['#heroLogo2', '#heroName2']].forEach(([i, n]) => {
+      const img = $(i), nameEl = $(n);
       img.onload = () => { img.hidden = false; nameEl.hidden = true; img.parentElement.classList.add('has-logo'); };
       img.onerror = () => { img.hidden = true; nameEl.hidden = false; img.parentElement.classList.remove('has-logo'); };
-      img.src = C.logo;
-    };
-    useLogo($('#heroLogo'), $('#heroName'));
-    useLogo($('#heroLogo2'), $('#heroName2'));
-  }
+      img.src = src;
+    });
+  });
 
   /* ---------- confetti ---------- */
   function confetti(n = 60) {
@@ -1031,6 +1012,7 @@ Variation code (make this review different from any other): ${p.seed}`;
     $('#review').value = text;
     $('#loading').hidden = true; $('#result').hidden = false; fit($('#review'));
   }
+  $('#extra').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); e.target.blur(); } });   // Enter closes the keyboard
   $('#writeBtn').onclick = generate;
   $('#againBtn').onclick = () => {
     if (state.edited && !confirm('This will replace your edits with a new version. Continue?')) return;
