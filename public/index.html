@@ -14,13 +14,13 @@
 window.FW = {
   clinicName: "Flosswork Dental Clinic",
 
-  // 0) Logo shown at the top of every page. Paste a data URI (see instructions) or a file path
-  //    like "logo.png". Leave "" to show the text name instead.
+  // 0) Clinic logo: shown large on the welcome card and small in the top bar. Paste a data URI or a file path
+  //    like "logo.png". Leave "" (or if it fails to load) and the clinic name is shown instead.
   logo: "",
 
   // 1) Your Google review link. Replace YOUR_PLACE_ID with your Place ID
   //    (Google's "Place ID Finder"), or paste the "Get more reviews" link from your Business Profile.
-  googleReviewUrl: "https://g.page/r/Ccqeas5-UXFzEBM/review",
+  googleReviewUrl: "https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID",
 
   // 2) Doctors (patients can pick several, including "The whole team").
   //    lead:true  = a lead doctor. staff:true = staff member: her name is always placed AFTER a lead
@@ -35,16 +35,16 @@ window.FW = {
   // 3) Treatments (patients can pick several). "phrase" is used inside the review.
   //    "lead" (optional) = the lead doctor auto-added when a patient picks only a staff member.
   treatments: [
-    { label: "Dental Implants",        phrase: "dental implant treatment", emoji: "🦷", seo: "dental implants in Raipur", lead: "Dr. Priyesh Gupta" },
-    { label: "Clear Aligners",         phrase: "clear aligner treatment",  emoji: "😁", seo: "clear aligners in Raipur", lead: "Dr. Nehal Saraf" },
-    { label: "Braces",                 phrase: "braces treatment",         emoji: "😬", seo: "braces in Raipur", lead: "Dr. Nehal Saraf" },
-    { label: "Anti-Snoring Treatment", phrase: "anti-snoring treatment",   emoji: "😴", seo: "anti-snoring treatment in Raipur" },
-    { label: "Smile Design",           phrase: "smile design treatment",           emoji: "✨", seo: "smile design in Raipur" },
-    { label: "Root Canal",             phrase: "root canal treatment",     emoji: "🛠️", seo: "root canal treatment in Raipur" },
-    { label: "Cleaning & Whitening",   phrase: "cleaning and whitening",   emoji: "🫧", seo: "teeth whitening in Raipur" },
-    { label: "Crowns & Bridges",       phrase: "crown and bridge work",    emoji: "👑", seo: "dental crowns in Raipur" },
-    { label: "Kids' Dentistry",        phrase: "my child's dental care",   emoji: "🧸", child: true, seo: "kids' dental care in Raipur" },
-    { label: "Checkup / Other",        phrase: "dental care",              emoji: "🔍", seo: "dental care in Raipur" }
+    { label: "Dental Implants", icon: "implant",        phrase: "dental implant treatment", emoji: "🦷", seo: "dental implants in Raipur", lead: "Dr. Priyesh Gupta" },
+    { label: "Clear Aligners", icon: "aligner",         phrase: "clear aligner treatment",  emoji: "😁", seo: "clear aligners in Raipur", lead: "Dr. Nehal Saraf" },
+    { label: "Braces", icon: "braces",                 phrase: "braces treatment",         emoji: "😬", seo: "braces in Raipur", lead: "Dr. Nehal Saraf" },
+    { label: "Anti-Snoring Treatment", icon: "snore", phrase: "anti-snoring treatment",   emoji: "😴", seo: "anti-snoring treatment in Raipur" },
+    { label: "Smile Design", icon: "smile",           phrase: "smile design treatment",           emoji: "✨", seo: "smile design in Raipur" },
+    { label: "Root Canal", icon: "rootcanal",             phrase: "root canal treatment",     emoji: "🛠️", seo: "root canal treatment in Raipur" },
+    { label: "Cleaning & Whitening", icon: "clean",   phrase: "cleaning and whitening",   emoji: "🫧", seo: "teeth whitening in Raipur" },
+    { label: "Crowns & Bridges", icon: "crown",       phrase: "crown and bridge work",    emoji: "👑", seo: "dental crowns in Raipur" },
+    { label: "Kids' Dentistry", icon: "kids",        phrase: "my child's dental care",   emoji: "🧸", child: true, seo: "kids' dental care in Raipur" },
+    { label: "Checkup / Other", icon: "checkup",        phrase: "dental care",              emoji: "🔍", seo: "dental care in Raipur" }
   ],
 
   // 4) What patients liked. "say" feeds the offline fallback writer.
@@ -74,6 +74,10 @@ window.FW = {
   // "https://wa.me/91XXXXXXXXXX". It never blocks or replaces the Google review. Leave "" to hide it.
   feedbackUrl: "",
 
+  // The trademark sign (TM) is shown after "Flosswork" everywhere on the page. Set this to true to ALSO put it
+  // inside the review text the patient posts on Google (off by default: it is the patient's own public text).
+  tmInReview: false,
+
   maxTreatments: 3,
   maxLiked: 5,
 
@@ -98,219 +102,244 @@ window.FW = {
 
 /* ============ end of settings ============ */
 </script>
-<title>Share your experience | Flosswork Dental Clinic</title>
+<title>Share your experience | Flosswork™ Dental Clinic</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap"></noscript>
 <style>
 :root{
-  --brand:#2563EB;      /* trust + continuity with Google's own review screen */
-  --brand-d:#1D4ED8;
-  --tint:#E8F0FF;
-  --tint-2:#CFE0FF;
-  --sun:#FFC83D;        /* stars and joy */
-  --sun-tint:#FFF3CF;
-  --coral:#FF7A6B;
-  --ink:#1C2540;
-  --navy:#16244A;
-  --gray:#5B6478;
-  --line:#DAE3F5;
-  --bg:#F5F8FF;
-  --r:18px;
+  --blue:#0061EE;      /* button blue, sampled from the reference */
+  --sky:#04A5FE;
+  --star:#FFE14F;
+  --yel:#FECE00;
+  --purp:#B59AD2;
+  --card:#F9F4F1;      /* soft off-white panels */
+  --bd:#E2DEDA;        /* card border */
+  --track:#EADFD9;
+  --ink:#2D2C2A;
+  --mut:#6E6862;
+  --tint:#E6F0FF;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font-family:"Plus Jakarta Sans","Noto Sans Devanagari",system-ui,sans-serif;
-  font-size:16px;line-height:1.55;
-  padding-top:env(safe-area-inset-top,0px);
-}
-.top{background:#fff;padding:14px 20px 10px;text-align:center;border-bottom:1px solid var(--line);border-radius:0 0 26px 26px;box-shadow:0 4px 14px rgba(37,99,235,.07)}
-.logo{display:block;margin:0 auto;max-height:46px;max-width:70%;object-fit:contain}
-.brand{font-family:Fredoka,"Plus Jakarta Sans",sans-serif;font-weight:600;font-size:21px;color:var(--navy)}
-.brand span{font-family:"Plus Jakarta Sans",sans-serif;font-weight:400;font-size:13px;color:var(--gray);margin-left:4px}
-.smile{width:150px;height:34px;display:block;margin:6px auto 0}
-.smile path{fill:none;stroke-linecap:round;stroke-width:6}
-.smile .track{stroke:var(--tint)}
-.smile .fill{stroke:var(--brand);stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset .7s cubic-bezier(.34,1.56,.64,1)}
+html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;background:#fff}
+body{margin:0;max-width:480px;margin-inline:auto;background:#fff;color:var(--ink);font-family:'Figtree',system-ui,sans-serif;font-size:16px;line-height:1.5;padding-top:env(safe-area-inset-top,0px);min-height:100vh}
+button,textarea{font-family:inherit}
+button{cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+@media (min-width:600px){html{background:#F3EEEA}body{margin:16px auto;min-height:calc(100vh - 32px);border-radius:28px;box-shadow:0 10px 40px rgba(45,44,42,.08);overflow:hidden}}
 
-main{max-width:480px;margin:0 auto;padding:22px 20px calc(30px + env(safe-area-inset-bottom,0px))}
-.screen{display:none}
-.screen.active{display:block;animation:in .34s cubic-bezier(.34,1.56,.64,1)}
-@keyframes in{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+/* ---------- header ---------- */
+.top{position:relative;padding:8px 14px 0}
+.topbar{display:flex;align-items:center;justify-content:space-between;min-height:54px}
+.mid{flex:1;min-width:0;display:flex;justify-content:center;align-items:center}
+.slot{width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;position:relative}
+.hback{width:44px;height:44px;padding:0;border:0;border-radius:50%;background:var(--card);color:var(--ink);display:flex;align-items:center;justify-content:center;transition:transform .15s,background .2s}
+.hback:active{transform:scale(.86);background:var(--track)}
+.brand{font-weight:800;font-size:20px;letter-spacing:-.4px}
+.brand span{font-weight:500;font-size:12px;color:var(--mut);margin-left:4px;letter-spacing:0}
+.logo{display:block;max-height:38px;max-width:100%;object-fit:contain}
+body[data-s="s-welcome"] .mid{visibility:hidden}
 
-h1{font-family:Fredoka,sans-serif;font-weight:600;font-size:31px;line-height:1.18;margin:6px 0 12px;color:var(--navy)}
-h2{font-family:Fredoka,sans-serif;font-weight:600;font-size:27px;line-height:1.2;margin:6px 0 6px;color:var(--navy)}
-h3{font-size:14px;font-weight:600;color:var(--gray);margin:20px 0 8px}
-.lead{color:var(--gray);margin:0 0 22px;font-size:17px}
-.lead.small{font-size:15px;margin-bottom:14px}
-.fine{color:var(--gray);font-size:13px;text-align:center;margin-top:18px}
+/* smile meter */
+.meter{width:280px;max-width:100%;margin:0 auto 2px}
+.meter svg{display:block;width:100%;height:auto;overflow:visible}
+body[data-s="s-welcome"] .meter,body[data-s="s-own"] .meter{display:none}
+.mtrack{fill:none;stroke:var(--track);stroke-width:12;stroke-linecap:round}
+.mfill{fill:none;stroke:var(--blue);stroke-width:12;stroke-linecap:round;stroke-dasharray:.01 100}
+.mmark{fill:#fff;stroke:var(--blue);stroke-width:4}
+.mstar{fill:var(--star);transform-box:fill-box;transform-origin:center;animation:twinkle 3.2s ease-in-out infinite}
+.mdot{fill:var(--sky)}
+.meter.full .mstar{animation:starpop .9s cubic-bezier(.34,1.56,.64,1)}
+@keyframes twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(14deg)}}
+@keyframes starpop{0%{transform:scale(.2) rotate(-60deg)}60%{transform:scale(1.6) rotate(20deg)}100%{transform:scale(1.15) rotate(0)}}
 
-.mascot{width:132px;height:132px;display:block;margin:2px auto 8px;animation:bob 2.6s ease-in-out infinite}
-.mascot .eyes{transform-origin:60px 52px;animation:blink 4s infinite}
-@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
-@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+/* ---------- screens ---------- */
+main{max-width:480px;margin:0 auto}
+.screen{display:none;padding:6px 22px 0}
+.screen.active{display:block}
+.screen.enter{animation:enter .45s cubic-bezier(.22,1,.36,1)}
+@keyframes enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-.btn{
-  display:block;width:100%;min-height:58px;border-radius:var(--r);border:2px solid transparent;
-  font:600 18px Fredoka,"Plus Jakarta Sans","Noto Sans Devanagari",sans-serif;cursor:pointer;margin-top:12px;
-  transition:transform .1s, box-shadow .1s, background .15s;
-}
-.btn.primary{background:var(--brand);color:#fff;box-shadow:0 5px 0 var(--brand-d)}
-.btn.primary:active{transform:translateY(4px);box-shadow:0 1px 0 var(--brand-d)}
-.btn.primary:disabled{background:#B9C9EE;box-shadow:0 5px 0 #9FB2DE;cursor:not-allowed}
-.btn.ghost{background:#fff;color:var(--navy);border-color:var(--line);box-shadow:0 4px 0 var(--line)}
-.btn.ghost:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
-.row{display:flex;gap:10px;margin-top:6px}
-.half{flex:1;min-height:52px;font-size:15.5px}
+.q{padding:8px 4px 14px}
+.q.center{text-align:center;padding:22px 8px 8px}
+.q h1{margin:0;font-size:36px;line-height:1.1;font-weight:800;letter-spacing:-.9px}
+.q h2{margin:0;font-size:34px;line-height:1.1;font-weight:800;letter-spacing:-.8px}
+.q h2.big{font-size:42px;letter-spacing:-1px}
+.q p{margin:8px 0 0;font-size:16.5px;line-height:1.45;font-weight:500;color:var(--mut)}
+.tag{display:inline-block;padding:5px 13px;border-radius:14px;background:var(--tint);color:var(--blue);font-size:13px;font-weight:700;margin-bottom:10px}
+.fine{margin:2px 0 0;text-align:center;font-size:13px;color:var(--mut)}
 
-.cta{position:sticky;bottom:0;padding:14px 0 6px;margin-top:10px;background:linear-gradient(to top,var(--bg) 70%,rgba(245,248,255,0))}
-.cta .btn{margin-top:0}
+/* hero card (welcome shows the clinic logo, thank-you shows the full smile) */
+.hero{position:relative;height:250px;margin:8px 0 0;border-radius:40px;background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:0 28px;text-align:center}
+.hero .decor{position:absolute;inset:0;width:100%;height:100%}
+.hero-name{position:relative;max-width:270px;font-size:34px;line-height:1.1;font-weight:800;letter-spacing:-.8px;text-wrap:balance}
+.hero-logo{position:relative;max-width:78%;max-height:150px;object-fit:contain}
+.decor .tw1,.decor .tw3{transform-box:fill-box;transform-origin:center;animation:twinkle 3.2s ease-in-out infinite}
+.decor .tw3{animation-delay:1.1s}
+.decor .tw1{fill:var(--star)}.decor .tw3{fill:var(--yel)}
+.decor .tw2{fill:var(--sky)}.decor .tw4{fill:var(--blue)}
+.thanks-hero{height:230px}
+.smile-track{fill:none;stroke:var(--track);stroke-width:24;stroke-linecap:round}
+.smile-full{fill:none;stroke:var(--blue);stroke-width:24;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100}
+.screen.active .smile-full{animation:drawSmile 1.1s .25s cubic-bezier(.34,1.2,.64,1) forwards}
+@keyframes drawSmile{to{stroke-dashoffset:0}}
 
-.back{background:none;border:0;color:var(--gray);font:600 15px Fredoka,sans-serif;padding:6px 0;margin-bottom:4px;cursor:pointer}
-.back::before{content:"‹ "}
+/* ---------- sticky bottom action bar ---------- */
+.cta{position:sticky;bottom:0;margin:18px -22px 0;padding:12px 22px calc(26px + env(safe-area-inset-bottom,0px));background:#fff;display:flex;flex-direction:column;gap:8px;z-index:3}
+.meta{text-align:center;font-size:14.5px;font-weight:700;color:var(--blue)}
+.meta b{display:inline-block}
+.meta b.bump{animation:bump .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes bump{50%{transform:scale(1.6)}}
 
-.stack{display:flex;flex-direction:column;gap:12px}
-.card{
-  position:relative;text-align:left;background:#fff;border:2px solid var(--line);border-radius:var(--r);
-  padding:14px 48px 14px 16px;font:600 17px "Plus Jakarta Sans",sans-serif;color:var(--navy);cursor:pointer;min-height:64px;
-  box-shadow:0 4px 0 var(--line);transition:transform .12s, box-shadow .12s, background .15s, border-color .15s;
-}
-.card .em{font-size:26px;margin-right:10px;vertical-align:middle}
-.card small{display:block;font-weight:400;color:var(--gray);font-size:14px;margin-left:40px;margin-top:-2px}
-.card::after{
-  content:"";position:absolute;right:14px;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;
-  border:2px solid var(--line);background:#fff;color:#fff;font-size:15px;line-height:22px;text-align:center;
-}
-.card[aria-pressed="true"]{background:var(--tint);border-color:var(--brand);box-shadow:0 4px 0 var(--brand);animation:pop .3s cubic-bezier(.34,1.56,.64,1)}
-.card[aria-pressed="true"]::after{content:"✓";background:var(--brand);border-color:var(--brand);font-weight:700}
-.card:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.grid .card{font-size:15px;padding:14px 12px;min-height:96px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:4px}
-.grid .card .em{font-size:28px;margin:0}
-.grid .card::after{right:8px;top:8px;margin:0;width:22px;height:22px;line-height:18px;font-size:13px}
-.stack .card:nth-child(odd){transform:rotate(-.4deg)}
-.stack .card:nth-child(even){transform:rotate(.4deg)}
-.stack .card[aria-pressed="true"]{transform:none}
+/* ---------- buttons ---------- */
+.btn{position:relative;overflow:hidden;width:100%;min-height:60px;border:3px solid transparent;border-radius:30px;background:var(--blue);color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:9px;transition:transform .12s,opacity .2s,background .2s}
+.btn:active{transform:scale(.97)}
+.btn.primary:hover{background:#0053CC}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ready{animation:ready .55s cubic-bezier(.34,1.56,.64,1)}
+@keyframes ready{0%{transform:scale(.96)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+.btn.ghost{background:#fff;color:var(--ink);border-color:var(--bd);min-height:52px;border-radius:26px;font-size:16px}
+.btn.link{background:transparent;color:var(--ink);text-decoration:underline;min-height:48px;font-size:16.5px;border:0}
+.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.btn .ripple{position:absolute;border-radius:50%;background:currentColor;opacity:.2;transform:scale(0);animation:rip .55s ease-out forwards;pointer-events:none}
+.btn.primary .ripple{background:#fff;opacity:.28}
+@keyframes rip{to{transform:scale(1);opacity:0}}
+.btn.spin svg{animation:spin .6s ease}
+@keyframes spin{to{transform:rotate(360deg)}}
 
+/* ---------- selectable cards ---------- */
+.list{display:flex;flex-direction:column;gap:12px;padding-top:4px}
+.opt{position:relative;width:100%;min-height:76px;display:flex;align-items:center;gap:12px;padding:0 16px 0 20px;background:#fff;color:var(--ink);border:3px solid var(--bd);border-radius:18px;text-align:left;transition:transform .15s,border-color .2s,background .2s}
+.opt:active,.tcard:active{transform:scale(.975)}
+.otxt{flex:1}
+.otxt .nm{display:block;font-size:18px;font-weight:600;line-height:1.2}
+.otxt small{display:block;font-size:13.5px;font-weight:500;color:var(--mut)}
+.ini{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--ink)}
+.ind{flex:none;width:28px;height:28px;border:2.5px solid #D6D0CC;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s}
+.ind svg,.badge svg,.ck svg{fill:none;stroke:#fff;stroke-width:3.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24}
+.ind svg{width:14px;height:14px}
+.opt[aria-pressed="true"],.tcard[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff;animation:pop .34s cubic-bezier(.34,1.56,.64,1)}
+.opt[aria-pressed="true"] .nm,.tcard[aria-pressed="true"] .tl{color:#fff}
+.opt[aria-pressed="true"] small{color:#E6F0FF}
+.opt[aria-pressed="true"] .ind{background:#fff;border-color:#fff}
+.opt[aria-pressed="true"] .ind svg{stroke:var(--blue)}
+[aria-pressed="true"] .ind svg,[aria-pressed="true"] .badge svg,[aria-pressed="true"] .ck svg{animation:draw .35s .05s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{0%{transform:scale(.95)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
+.shake{animation:shake .32s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-top:6px}
+.tcard{position:relative;min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:4px;padding:0 9px 0 14px;background:#fff;color:var(--ink);border:3px solid var(--bd);border-radius:18px;text-align:left;transition:transform .15s,border-color .2s}
+.tl{flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:600;line-height:1.15;overflow-wrap:break-word;hyphens:manual}
+.ico{flex:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#fff}
+.ico svg{width:30px;height:30px}
+.badge{position:absolute;top:-10px;left:-10px;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--blue);display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.badge svg{width:12px;height:12px;stroke:var(--blue)}
+.tcard[aria-pressed="true"] .badge{transform:scale(1)}
+
+.grp{margin:20px 0 9px;font-size:13.5px;font-weight:700;color:var(--mut)}
 .chips{display:flex;flex-wrap:wrap;gap:9px}
-.chip{
-  border:2px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;
-  padding:10px 15px;font:500 15px "Plus Jakarta Sans",sans-serif;cursor:pointer;min-height:46px;
-  box-shadow:0 3px 0 var(--line);transition:transform .1s, box-shadow .1s;
-}
-.chip:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
-.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 3px 0 var(--brand-d);animation:pop .3s cubic-bezier(.34,1.56,.64,1)}
-@keyframes pop{0%{transform:scale(.92)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+.chip{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;background:#fff;color:var(--ink);border:3px solid var(--bd);border-radius:999px;font-size:15px;font-weight:600;transition:transform .12s,background .2s,border-color .2s,color .2s}
+.chip:active{transform:scale(.94)}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff;animation:pop .34s cubic-bezier(.34,1.56,.64,1)}
+.ck{display:inline-flex;width:0;overflow:hidden;transition:width .22s,margin .22s}
+.ck svg{width:16px;height:16px;min-width:16px}
+.chip[aria-pressed="true"] .ck{width:16px;margin-right:6px}
 
-.field{display:block;font-weight:600;font-size:14px;color:var(--gray);margin:22px 0 8px}
-.field em{font-weight:400}
-textarea{
-  width:100%;border:2px solid var(--line);border-radius:var(--r);padding:14px;
-  font:16px/1.55 "Plus Jakarta Sans","Noto Sans Devanagari",sans-serif;color:var(--ink);background:#fff;resize:vertical;
-}
-textarea:focus{outline:none;border-color:var(--brand)}
-#review{background:var(--sun-tint);border-color:#FBE3A0;font-size:17px}
+.opt.stag,.tcard.stag,.chip.stag,.ideas li.stag,.steps li.stag{animation:stag .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes stag{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
 
-.seg{display:flex;border:2px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff}
-.seg button{flex:1;border:0;background:none;padding:12px 6px;font:600 15px "Plus Jakarta Sans","Noto Sans Devanagari",sans-serif;cursor:pointer;color:var(--ink)}
-.seg button[aria-checked="true"]{background:var(--navy);color:#fff}
+.field{display:block;margin:22px 0 8px;font-size:14px;font-weight:700;color:var(--mut)}
+.field em{font-weight:500}
+#extra{display:block;width:100%;padding:14px 16px;border:3px solid var(--bd);border-radius:18px;background:#fff;color:var(--ink);font-size:16px;line-height:1.5;resize:none}
+#extra:focus{outline:none;border-color:var(--blue)}
 
-.ideas{padding-left:20px;color:var(--gray);margin:0 0 10px}
-.ideas li{margin-bottom:8px}
-.steps{padding-left:22px;font-size:17px;margin:0 0 18px}
-.steps li{margin-bottom:6px}
+/* ---------- own words ---------- */
+.ideas{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.ideas li{display:flex;align-items:center;gap:14px;padding:16px 18px;border:3px solid var(--bd);border-radius:18px;font-size:16px;font-weight:600}
+.ideas li::before{content:"";flex:none;width:14px;height:14px;border-radius:50%;background:var(--star)}
+.ideas li:nth-child(2)::before{background:var(--sky)}
+.ideas li:nth-child(3)::before{background:var(--purp)}
 
-.loading{text-align:center;padding:70px 0;color:var(--gray);font-size:18px}
-.dots{display:flex;gap:9px;justify-content:center;margin-bottom:16px}
-.dots i{width:16px;height:16px;border-radius:50%;background:var(--brand);animation:b 1s infinite ease-in-out}
-.dots i:nth-child(2){animation-delay:.15s;background:var(--sun)}
-.dots i:nth-child(3){animation-delay:.3s;background:var(--coral)}
-@keyframes b{0%,80%,100%{transform:translateY(0) scale(.7)}40%{transform:translateY(-14px) scale(1)}}
+/* ---------- writing + review ---------- */
+.skel{display:flex;flex-direction:column;gap:14px;padding:26px 24px;border-radius:32px;background:var(--card)}
+.skel i{display:block;height:14px;border-radius:7px;background:linear-gradient(90deg,var(--track) 25%,#F3EAE5 50%,var(--track) 75%);background-size:300% 100%;animation:shim 1.3s infinite linear}
+.skel i:nth-child(2){width:90%}.skel i:nth-child(3){width:72%}.skel i:nth-child(4){width:84%}
+@keyframes shim{from{background-position:100% 0}to{background-position:0 0}}
+#review,#manualText{display:block;width:100%;padding:24px;border:3px solid transparent;border-radius:32px;background:var(--card);color:var(--ink);font-size:17.5px;line-height:1.55;font-weight:500;resize:none;overflow:hidden}
+#review:focus,#manualText:focus{outline:none;border-color:var(--blue)}
+#result:not([hidden]) #review{animation:rise .55s cubic-bezier(.22,1,.36,1)}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.row2{display:flex;gap:10px;margin-top:12px}
+.row2 .btn{flex:1;font-size:14px;padding:0 8px;gap:6px;white-space:nowrap}
 
-.tick{width:64px;height:64px;border-radius:50%;background:var(--tint);display:grid;place-items:center;font-size:30px;margin-bottom:12px}
-.tick.big{width:92px;height:92px;font-size:50px;margin:10px 0 14px;background:var(--sun-tint);animation:bob 2.2s ease-in-out infinite}
+/* ---------- copied ---------- */
+.steps{counter-reset:s;list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:flex;align-items:center;gap:14px;padding:14px 18px;border:3px solid var(--bd);border-radius:18px;font-size:15.5px;font-weight:600}
+.steps li::before{content:counter(s);flex:none;width:32px;height:32px;border-radius:50%;background:var(--star);display:flex;align-items:center;justify-content:center;font-weight:700}
+.steps li:nth-child(2)::before{background:#9ED8FF}
+.steps li:nth-child(3)::before{background:#D9C9F0}
+.cd{margin-top:16px}
+.cdbar{height:9px;border-radius:5px;background:var(--track);overflow:hidden}
+.cdbar i{display:block;height:100%;width:0;border-radius:5px;background:var(--blue);transition:width 1s linear}
+.cd p{margin:8px 0 0;text-align:center;font-size:14px;font-weight:600;color:var(--mut)}
+.soft{display:block;text-align:center;margin:6px 0 0;font-size:14px;color:var(--mut);text-decoration:underline;min-height:44px;line-height:44px}
 
+/* ---------- confetti ---------- */
 #confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}
 #confetti i{position:absolute;top:-24px;width:11px;height:16px;border-radius:3px;animation:fall linear forwards}
-@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+#confetti i.c-dot{width:12px;height:12px;border-radius:50%}
+#confetti i.c-star{width:18px;height:18px;border-radius:0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
 
-:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important}
-  #confetti{display:none}
-}
-
-#manualText{background:var(--sun-tint);border-color:#FBE3A0;margin-bottom:6px}
-.top{position:relative}
-#dbg{position:absolute;left:6px;bottom:4px;z-index:80;text-align:left;font:12.5px/1.5 "Plus Jakarta Sans",system-ui,sans-serif}
+/* ---------- AI status dot + details (top right) ---------- */
+#dbg{position:static;text-align:left;font:12.5px/1.5 'Figtree',system-ui,sans-serif}
 #dbgPill{position:relative;width:30px;height:30px;padding:0;border:0;background:transparent;cursor:pointer}
 #dbgPill::after{content:"";position:absolute;inset:9px;border-radius:50%;background:#94A3B8;box-shadow:0 0 0 3px rgba(148,163,184,.25)}
 #dbgPill.ok::after{background:#22A06B;box-shadow:0 0 0 3px rgba(34,160,107,.22)}
 #dbgPill.down::after{background:#E5484D;box-shadow:0 0 0 3px rgba(229,72,77,.22)}
-#dbgBody{position:absolute;left:4px;top:32px;width:min(330px,calc(100vw - 20px));background:#fff;color:#1C2540;border:1px solid #DAE3F5;border-radius:16px;padding:12px 14px;max-height:60vh;overflow:auto;box-shadow:0 10px 30px rgba(22,36,74,.16)}
+#dbgBody{position:absolute;right:-4px;top:46px;width:min(330px,calc(100vw - 20px));background:#fff;color:var(--ink);border:1px solid var(--bd);border-radius:16px;padding:12px 14px;max-height:60vh;overflow:auto;box-shadow:0 10px 30px rgba(45,44,42,.16);z-index:80}
 #dbgBody pre{margin:0 0 10px;white-space:pre-wrap;word-break:break-word;font:inherit}
 .dbgRow{display:flex;gap:6px;margin-bottom:10px}
-.dbgRow button{flex:1;border:1px solid #DAE3F5;background:#F5F8FF;color:#16244A;border-radius:999px;padding:7px 8px;font:600 12px "Plus Jakarta Sans",system-ui,sans-serif;cursor:pointer}
+.dbgRow button{flex:1;border:1px solid var(--bd);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 8px;font:600 12px 'Figtree',system-ui,sans-serif;cursor:pointer}
 
-/* ---- mobile-first refinements ---- */
-html{-webkit-tap-highlight-color:transparent}
-button,.card,.chip{touch-action:manipulation}
-.card,.chip,.btn,.back{-webkit-user-select:none;user-select:none}
-.back{min-height:44px;padding:8px 10px 8px 0}
-.cta{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
-@media (hover:hover){.card:hover{border-color:var(--brand)}.chip:hover{border-color:var(--brand)}}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+@media (max-width:420px){.tl{font-size:13.5px}.ico{width:34px;height:34px}.ico svg{width:26px;height:26px}.tcard{padding:0 8px 0 12px}}
 @media (max-width:359px){
-  main{padding-left:14px;padding-right:14px}
-  h1{font-size:26px}h2{font-size:23px}.lead{font-size:16px}
-  .grid{gap:8px}.grid .card{font-size:14px;padding:12px 10px}
-  .mascot{width:110px;height:110px}
+  .screen{padding-left:14px;padding-right:14px}.cta{margin-left:-14px;margin-right:-14px;padding-left:14px;padding-right:14px}
+  .q h1{font-size:30px}.q h2{font-size:28px}.q h2.big{font-size:36px}.hero{height:210px}.hero-name{font-size:28px}.grid{gap:10px}.tl{font-size:13.5px}.tcard{padding:0 7px 0 11px}.ico{width:34px;height:34px}.ico svg{width:25px;height:25px}.tl{font-size:13px}
 }
-@media (max-height:640px){.mascot{width:96px;height:96px;margin-bottom:0}h1{font-size:27px}}
-@media (min-width:600px){body{background:#EEF3FF}main{background:var(--bg);margin-top:16px;border-radius:24px;box-shadow:0 10px 40px rgba(22,36,74,.08);min-height:640px}}
+@media (max-height:640px){.hero{height:190px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}#confetti{display:none}}
 
-/* ---- top bar: back (left) · brand (centre) · AI status (right) ---- */
-.top{padding:8px 10px 8px}
-.topbar{display:flex;align-items:center;justify-content:space-between}
-.mid{flex:1;min-width:0;display:flex;justify-content:center;align-items:center}
-.slot{width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;position:relative}
-.hback{width:40px;height:40px;padding:0;border:0;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.hback:active{background:var(--tint-2)}
-.logo{max-height:40px;max-width:100%}
-#dbg{position:static}
-#dbgBody{left:auto;right:-4px;top:46px}
-
-/* ---- last page ---- */
-#manualText{width:100%;background:var(--sun-tint);border-color:#FBE3A0;margin:2px 0 14px;font-size:16px}
-.steps{margin:0 0 14px;padding-left:22px;font-size:16px;color:var(--ink)}
-.steps li{margin-bottom:6px}
-.cd{margin:4px 0 6px}
-.cdbar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
-.cdbar i{display:block;height:100%;width:0;background:var(--brand);transition:width 1s linear}
-.cd p{margin:8px 0 0;text-align:center;font-size:14px;color:var(--gray)}
-.soft{display:block;text-align:center;margin:18px 0 4px;font-size:14px;color:var(--gray);text-decoration:underline;min-height:44px;line-height:44px}
+.mid-tag{align-self:center;margin:0 0 2px}
 </style>
 </head>
-<body>
+<body data-s="s-welcome">
 
 <header class="top">
   <div class="topbar">
     <div class="slot"><button id="backBtn" class="hback" type="button" aria-label="Back" hidden>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16244A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
     </button></div>
     <div class="mid">
-      <img id="logo" class="logo" alt="Flosswork Dental Clinic" hidden>
-      <div class="brand" id="brandText">Flosswork <span>Dental Clinic</span></div>
+      <img id="logo" class="logo" alt="Flosswork™ Dental Clinic" hidden>
+      <div class="brand" id="brandText">Flosswork™ <span>Dental Clinic</span></div>
     </div>
     <div class="slot" id="dbgSlot"></div>
   </div>
-  <svg class="smile" viewBox="0 0 200 44" aria-hidden="true">
-    <path class="track" d="M12 8 Q100 62 188 8" pathLength="100"/>
-    <path id="smileFill" class="fill" d="M12 8 Q100 62 188 8" pathLength="100"/>
-  </svg>
+  <!-- smile meter: the smile grows to full as the patient moves through the steps -->
+  <div class="meter" id="meterWrap" aria-hidden="true">
+    <svg id="meter" viewBox="0 0 280 70">
+      <path class="mtrack" d="M16 12 Q140 70 264 12" pathLength="100"/>
+      <path id="mFill" class="mfill" d="M16 12 Q140 70 264 12" pathLength="100"/>
+      <circle id="mMark" class="mmark" cx="16" cy="12" r="9"/>
+      <path class="mstar" d="M262 32 Q262 40 270 40 Q262 40 262 48 Q262 40 254 40 Q262 40 262 32Z"/>
+      <circle class="mdot" cx="274" cy="24" r="3.5"/>
+    </svg>
+  </div>
 </header>
 
 <div id="confetti" aria-hidden="true"></div>
@@ -319,105 +348,122 @@ button,.card,.chip{touch-action:manipulation}
 
   <!-- WELCOME -->
   <section id="s-welcome" class="screen active">
-    <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true">
-      <circle cx="60" cy="60" r="56" fill="#E8F0FF"/>
-      <path d="M60 30C52 24 36 24 32 38C29 48 35 56 36 68C37 80 40 96 47 96C54 96 53 78 60 78C67 78 66 96 73 96C80 96 83 80 84 68C85 56 91 48 88 38C84 24 68 24 60 30Z" fill="#fff" stroke="#2563EB" stroke-width="4" stroke-linejoin="round"/>
-      <g class="eyes"><circle cx="49" cy="52" r="3.6" fill="#16244A"/><circle cx="71" cy="52" r="3.6" fill="#16244A"/></g>
-      <path d="M50 61q10 10 20 0" fill="none" stroke="#16244A" stroke-width="3.5" stroke-linecap="round"/>
-      <circle cx="42" cy="61" r="4.5" fill="#FFB8AA"/><circle cx="78" cy="61" r="4.5" fill="#FFB8AA"/>
-    </svg>
-    <h1>Loved your visit? Let's tell the world! 🎉</h1>
-    <p class="lead">A few kind words from you help the next patient feel brave. Takes under a minute.</p>
-    <button class="btn primary" data-go="s-doctor">Help me write it ✨</button>
-    <button class="btn ghost" data-go="s-own">I'll write it myself ✍️</button>
-    <p class="fine">You post it yourself, and you can change every word first.</p>
+    <div class="hero" id="heroWelcome">
+      <svg class="decor" viewBox="0 0 342 250" aria-hidden="true">
+        <path class="tw1" d="M276 52 Q276 74 298 74 Q276 74 276 96 Q276 74 254 74 Q276 74 276 52Z"/>
+        <circle class="tw2" cx="306" cy="34" r="8"/>
+        <path class="tw3" d="M60 188 Q60 200 72 200 Q60 200 60 212 Q60 200 48 200 Q60 200 60 188Z"/>
+        <circle class="tw4" cx="40" cy="64" r="5"/>
+      </svg>
+      <img id="heroLogo" class="hero-logo" alt="Flosswork™ Dental Clinic" hidden>
+      <div id="heroName" class="hero-name">Flosswork™ Dental Clinic</div>
+    </div>
+    <div class="q center">
+      <h1>Hi there! Ready to share how it went?</h1>
+      <p>It takes about a minute. We will help with the words.</p>
+    </div>
+    <div class="cta">
+      <button class="btn primary" type="button" data-go="s-doctor">Yes, let's go</button>
+      <button class="btn link" type="button" data-go="s-own">I will write it myself</button>
+      <p class="fine">You post it yourself, and you can change every word first.</p>
+    </div>
   </section>
 
   <!-- OWN WORDS -->
   <section id="s-own" class="screen">
-    <h2>Your words, your way ✍️</h2>
-    <p class="lead small">Stuck? Any of these can spark a sentence:</p>
+    <div class="q"><h2>In your own words</h2><p>Stuck? Any of these can spark a sentence:</p></div>
     <ul class="ideas">
       <li>How did you feel before, and after, your visit?</li>
       <li>What did the doctor do that made you comfortable?</li>
       <li>What would you tell a friend who's nervous about this treatment?</li>
     </ul>
-    <button class="btn primary" id="ownGo">Open Google reviews</button>
+    <div class="cta"><button class="btn primary" id="ownGo" type="button">Open Google reviews</button></div>
   </section>
 
   <!-- DOCTOR -->
   <section id="s-doctor" class="screen">
-    <h2>Who took care of your smile? 🦷</h2>
-    <p class="lead small">Pick everyone who helped.</p>
-    <div id="doctorList" class="stack"></div>
-    <div class="cta"><button class="btn primary" id="doctorNext" disabled>Next</button></div>
+    <div class="q"><h2>Who looked after you?</h2><p>Pick everyone who helped.</p></div>
+    <div id="doctorList" class="list"></div>
+    <div class="cta"><div class="meta"><b id="docN">0</b> selected</div><button class="btn primary" id="doctorNext" type="button" disabled>Next</button></div>
   </section>
 
   <!-- TREATMENT -->
   <section id="s-treatment" class="screen">
-    <h2>What did we work on? ✨</h2>
-    <p class="lead small">Pick up to <span id="maxT">3</span>.</p>
+    <div class="q"><h2>What did we work on?</h2><p>Pick up to <span id="maxT">3</span>.</p></div>
     <div id="treatmentList" class="grid"></div>
-    <div class="cta"><button class="btn primary" id="treatmentNext" disabled>Next</button></div>
+    <div class="cta"><div class="meta"><b id="trN">0</b> of <span id="maxT2">3</span> selected</div><button class="btn primary" id="treatmentNext" type="button" disabled>Next</button></div>
   </section>
 
-  <!-- LIKED -->
+  <!-- LIKED: what made you smile -->
   <section id="s-liked" class="screen">
-    <h2>What made you smile? 😁</h2>
-    <p class="lead small">Pick what felt true. Up to <span id="maxN">5</span>.</p>
+    <div class="q"><h2>What made you smile?</h2><p>Pick what felt true. Up to <span id="maxN">5</span>.</p></div>
 
-    <h3>About your treatment</h3>
+    <h3 class="grp">About your treatment</h3>
     <div id="likedTreatment" class="chips"></div>
-    <h3>About the clinic</h3>
+    <h3 class="grp">About the clinic</h3>
     <div id="likedClinic" class="chips"></div>
 
     <label class="field" for="extra">Anything else? <em>(optional)</em></label>
     <textarea id="extra" rows="2" maxlength="200" enterkeyhint="done" autocapitalize="sentences" placeholder="For example: I was nervous, but felt calm throughout."></textarea>
 
-    <div class="cta"><button class="btn primary" id="writeBtn" disabled>Write my review ✨</button></div>
+    <div class="cta"><div class="meta"><b id="likeN">0</b> of <span id="maxN2">5</span> selected</div><button class="btn primary" id="writeBtn" type="button" disabled>Write my review</button></div>
   </section>
 
   <!-- WRITE / EDIT -->
   <section id="s-write" class="screen">
     <div id="loading" class="loading" hidden>
-      <div class="dots"><i></i><i></i><i></i></div>
-      <p id="loadMsg">Sprinkling some words…</p>
+      <div class="q"><h2>Writing your review</h2><p id="loadMsg">Sprinkling some words…</p></div>
+      <div class="skel"><i></i><i></i><i></i><i></i></div>
     </div>
 
     <div id="result" hidden>
-      <h2>Ta-da! Here's your review 🎉</h2>
-      <p class="lead small">It's yours. Edit anything so it sounds like you.</p>
+      <div class="q"><h2>Your review is ready</h2><p>It is yours. Edit anything so it sounds like you.</p></div>
       <textarea id="review" rows="8" aria-label="Your review" autocapitalize="sentences" enterkeyhint="done"></textarea>
-      <div class="row">
-        <button class="btn ghost half" id="againBtn">🔄 Another version</button>
-        <button class="btn ghost half" data-go="s-liked">✏️ Change picks</button>
+      <div class="row2">
+        <button class="btn ghost" id="againBtn" type="button"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"/></svg>Another version</button>
+        <button class="btn ghost" data-go="s-liked" type="button"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Change picks</button>
       </div>
-      <button class="btn primary" id="copyGo">Copy &amp; go to Google 🚀</button>
+      <div class="cta">
+        <span class="tag mid-tag">Last step, you are nearly done</span>
+        <button class="btn primary" id="copyGo" type="button">Copy &amp; go to Google</button>
+        <p class="fine">Your review is copied for you. On Google, choose your rating and paste it in.</p>
+      </div>
     </div>
   </section>
 
   <!-- COPIED / REDIRECT -->
   <section id="s-go" class="screen">
-    <div class="tick big" aria-hidden="true">🌟</div>
-    <h1>You're a star!</h1>
-    <p class="lead small" id="goSub">Your review is copied ✓</p>
+    <div class="q"><h2 class="big">You're a star!</h2><p id="goSub">Your review is copied ✓</p></div>
     <textarea id="manualText" rows="5" readonly aria-label="Your review, copied and ready to paste"></textarea>
     <ol class="steps">
-      <li>Google opens the review page for Flosswork.</li>
+      <li>Google opens the review page for Flosswork™.</li>
       <li>Choose the rating that reflects your visit.</li>
       <li>Paste your review into the box and tap Post.</li>
     </ol>
     <div id="cd" class="cd"><div class="cdbar"><i id="cdFill"></i></div><p id="countdown"></p></div>
-    <button class="btn primary" id="openNow">Open Google</button>
-    <button class="btn ghost" id="copyAgain">Copy again</button>
-    <a id="feedbackLink" class="soft" target="_blank" rel="noopener" hidden>Prefer to tell us privately?</a>
+    <div class="cta">
+      <button class="btn primary" id="openNow" type="button">Open Google</button>
+      <button class="btn ghost" id="copyAgain" type="button">Copy again</button>
+      <a id="feedbackLink" class="soft" target="_blank" rel="noopener" hidden>Prefer to tell us privately?</a>
+    </div>
   </section>
 
   <!-- THANKS -->
   <section id="s-thanks" class="screen">
-    <div class="tick big" aria-hidden="true">🌟</div>
-    <h1>Thank you!</h1>
-    <p class="lead" id="thanksMsg">Your words will help someone take the first step toward a healthier smile.</p>
+    <div class="hero" id="heroThanks">
+      <svg class="decor" viewBox="0 0 342 250" aria-hidden="true">
+        <path class="tw1" d="M276 52 Q276 74 298 74 Q276 74 276 96 Q276 74 254 74 Q276 74 276 52Z"/>
+        <circle class="tw2" cx="306" cy="34" r="8"/>
+        <path class="tw3" d="M60 188 Q60 200 72 200 Q60 200 60 212 Q60 200 48 200 Q60 200 60 188Z"/>
+        <circle class="tw4" cx="40" cy="64" r="5"/>
+      </svg>
+      <img id="heroLogo2" class="hero-logo" alt="Flosswork™ Dental Clinic" hidden>
+      <div id="heroName2" class="hero-name">Flosswork™ Dental Clinic</div>
+    </div>
+    <div class="q center">
+      <h1>Thank you!</h1>
+      <p id="thanksMsg">Your words will help someone take the first step toward a healthier smile.</p>
+    </div>
     <p class="fine">You can close this page now.</p>
   </section>
 
@@ -433,28 +479,68 @@ button,.card,.chip{touch-action:manipulation}
   const shuffle = a => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
   const q = new URLSearchParams(location.search);
   const DEBUG = q.get('debug') === '0' ? false : (q.has('debug') || !!C.showAiStatus);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const state = { doctors: new Set(), treatments: new Set(), liked: new Map(), timer: null, edited: false };
-  const PROGRESS = { 's-welcome': 0, 's-own': 100, 's-doctor': 22, 's-treatment': 45,
-                     's-liked': 68, 's-write': 88, 's-go': 100, 's-thanks': 100 };
+  /* ---------- smile meter: the smile grows to full as the patient moves through the steps ---------- */
+  const STEP = { 's-doctor': 1, 's-treatment': 2, 's-liked': 3, 's-write': 4, 's-go': 5, 's-thanks': 5 };
+  const bz = t => ({ x: (1 - t) * (1 - t) * 16 + 2 * (1 - t) * t * 140 + t * t * 264, y: (1 - t) * (1 - t) * 12 + 2 * (1 - t) * t * 70 + t * t * 12 });
+  let meterT = 0, meterRaf = 0;
+  function paintMeter(t) {
+    const c = Math.max(0, Math.min(1, t)), p = bz(c), m = $('#mMark');
+    $('#mFill').style.strokeDasharray = `${Math.max(c * 100, .01)} 100`;
+    m.setAttribute('cx', p.x.toFixed(1)); m.setAttribute('cy', p.y.toFixed(1));
+  }
+  function meterTo(n) {
+    const to = n / 5, from = meterT; cancelAnimationFrame(meterRaf);
+    $('#meterWrap').classList.toggle('full', n >= 5);
+    if (reduced || from === to) { meterT = to; paintMeter(to); return; }
+    const t0 = performance.now(), dur = 700;
+    const ease = x => 1 + 2.5 * Math.pow(x - 1, 3) + 1.5 * Math.pow(x - 1, 2);   // a soft spring
+    const tick = now => {
+      const k = Math.min(1, (now - t0) / dur);
+      paintMeter(from + (to - from) * ease(k));
+      if (k < 1) meterRaf = requestAnimationFrame(tick); else { meterT = to; paintMeter(to); }
+    };
+    meterRaf = requestAnimationFrame(tick);
+  }
+  const fit = el => { el.style.height = 'auto'; el.style.height = (el.scrollHeight + 2) + 'px'; };   // textarea grows with its text
+  function enterAnim(id) {
+    const el = document.getElementById(id);
+    el.classList.remove('enter');
+    if (!reduced) { void el.offsetWidth; el.classList.add('enter'); }
+    $$('.opt,.tcard,.chip,.ideas li,.steps li', el).forEach((b, i) => {
+      b.classList.remove('stag'); b.style.animationDelay = '';
+      if (reduced) return;
+      void b.offsetWidth; b.style.animationDelay = (i * 40 + 60) + 'ms'; b.classList.add('stag');
+      b.addEventListener('animationend', () => { b.classList.remove('stag'); b.style.animationDelay = ''; }, { once: true });
+    });
+  }
 
   if (C.feedbackUrl) { const f = $('#feedbackLink'); f.href = C.feedbackUrl; f.hidden = false; }
 
-  /* ---------- logo ---------- */
+  /* ---------- logo (top bar + welcome card). Falls back to the clinic name if there is no logo or it fails to load ---------- */
+  const tm = s => String(s).replace(/Flosswork(?!™)/g, 'Flosswork™');   // display only
+  $('#heroName').textContent = tm(C.clinicName); $('#heroName2').textContent = tm(C.clinicName);
   if (C.logo) {
-    const im = $('#logo');
-    im.onload = () => { im.hidden = false; $('#brandText').hidden = true; };
-    im.onerror = () => { im.hidden = true; $('#brandText').hidden = false; };
-    im.src = C.logo;
+    const useLogo = (img, nameEl) => {
+      img.onload = () => { img.hidden = false; nameEl.hidden = true; };
+      img.onerror = () => { img.hidden = true; nameEl.hidden = false; };
+      img.src = C.logo;
+    };
+    useLogo($('#logo'), $('#brandText'));
+    useLogo($('#heroLogo'), $('#heroName'));
+    useLogo($('#heroLogo2'), $('#heroName2'));
   }
 
   /* ---------- confetti ---------- */
   function confetti(n = 60) {
     const box = $('#confetti');
-    const colors = ['#2563EB', '#FFC83D', '#FF7A6B', '#34D399', '#A78BFA', '#93B4F8'];
+    const colors = ['#0061EE', '#04A5FE', '#FFE14F', '#FECE00', '#B59AD2', '#FF7300', '#FF9BC8'];
     for (let i = 0; i < n; i++) {
       const el = document.createElement('i');
       el.style.left = Math.random() * 100 + '%';
+      el.className = pick(['', '', 'c-dot', 'c-star']);
       el.style.background = pick(colors);
       el.style.animationDuration = 2 + Math.random() * 2 + 's';
       el.style.animationDelay = Math.random() * .6 + 's';
@@ -470,7 +556,9 @@ button,.card,.chip{touch-action:manipulation}
   function show(id, push = true) {
     clearInterval(state.timer);
     $$('.screen').forEach(s => s.classList.toggle('active', s.id === id));
-    $('#smileFill').style.strokeDashoffset = 100 - (PROGRESS[id] ?? 0);
+    document.body.dataset.s = id;
+    meterTo(STEP[id] ?? 0);
+    enterAnim(id);
     window.scrollTo(0, 0);
     $('#backBtn').hidden = id === 's-welcome' || id === 's-thanks';
     if (push && !(history.state && history.state.s === id)) history.pushState({ s: id }, '');
@@ -493,38 +581,74 @@ button,.card,.chip{touch-action:manipulation}
   });
 
   /* ---------- multi-select builders ---------- */
+  const CHK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  const bump = el => { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); };
+  const setReady = (btn, on) => { const was = btn.disabled; btn.disabled = !on; if (on && was && !reduced) { btn.classList.remove('ready'); void btn.offsetWidth; btn.classList.add('ready'); } };
+  const buzz = () => { try { navigator.vibrate && navigator.vibrate(8); } catch (_) {} };
   function toggleBtn(cls, html, onToggle) {
     const b = document.createElement('button');
-    b.className = cls; b.innerHTML = html; b.setAttribute('aria-pressed', 'false');
-    b.onclick = () => b.setAttribute('aria-pressed', onToggle(b.getAttribute('aria-pressed') !== 'true'));
+    b.type = 'button'; b.className = cls; b.innerHTML = html; b.setAttribute('aria-pressed', 'false');
+    b.onclick = () => {
+      const want = b.getAttribute('aria-pressed') !== 'true';
+      const res = onToggle(want);
+      b.setAttribute('aria-pressed', res);
+      if (want && !res) { b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); }   // limit reached
+      else buzz();
+    };
     return b;
   }
-  C.doctors.forEach(d => {
-    $('#doctorList').append(toggleBtn('card', `<span class="em">${d.emoji || '🧑‍⚕️'}</span>${d.name}${d.role ? `<small>${d.role}</small>` : ''}`, on => {
+
+  // treatment icons: small colourful flat drawings (original artwork)
+  const BL = '#0061EE', SK = '#04A5FE', ST = '#FFE14F', YE = '#FECE00', PU = '#B59AD2', OR = '#FF7300', PK = '#FF9BC8';
+  const TOOTH = 'M12 5.5C10.5 4.2 7.2 4.2 6.3 6.6C5.6 8.6 7 10.2 7.2 12.4C7.4 14.8 8 19 9.6 19C11 19 11 15.8 12 15.8C13 15.8 13 19 14.4 19C16 19 16.6 14.8 16.8 12.4C17 10.2 18.4 8.6 17.7 6.6C16.8 4.2 13.5 4.2 12 5.5Z';
+  const star4 = (x, y, s, c) => `<path d="M${x} ${y - s} Q${x} ${y} ${x + s} ${y} Q${x} ${y} ${x} ${y + s} Q${x} ${y} ${x - s} ${y} Q${x} ${y} ${x} ${y - s}Z" fill="${c}"/>`;
+  const ICON = {
+    implant: `<path d="M11 5h18c1.6 0 2.6 1.6 2 3.2L28 18H12L9 8.2C8.4 6.6 9.4 5 11 5Z" fill="${YE}"/><path d="M14 20h12l-2 14c-.2 1.2-1 2-2.2 2h-3.6c-1.2 0-2-.8-2.2-2z" fill="${BL}"/><path d="M15.4 24h9.2M15 28h10M15.8 32h8.4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>`,
+    aligner: `<path d="M5 27C5 14 12 8 20 8s15 6 15 19" fill="none" stroke="${SK}" stroke-width="7" stroke-linecap="round"/><rect x="8" y="27" width="6" height="9" rx="3" fill="${ST}"/><rect x="17" y="27" width="6" height="9" rx="3" fill="${ST}"/><rect x="26" y="27" width="6" height="9" rx="3" fill="${ST}"/>`,
+    braces: `<rect x="3" y="11" width="10" height="18" rx="5" fill="#E6DCF5"/><rect x="15" y="11" width="10" height="18" rx="5" fill="#E6DCF5"/><rect x="27" y="11" width="10" height="18" rx="5" fill="#E6DCF5"/><path d="M2 20h36" stroke="${PU}" stroke-width="2.4" stroke-linecap="round"/><rect x="6" y="17.5" width="4" height="5" rx="1.4" fill="${BL}"/><rect x="18" y="17.5" width="4" height="5" rx="1.4" fill="${BL}"/><rect x="30" y="17.5" width="4" height="5" rx="1.4" fill="${BL}"/>`,
+    snore: `<path d="M25 33A14 14 0 1 1 15 8a11 11 0 0 0 10 25z" fill="#3B2F8F"/><path d="M27 6h7l-7 8h7" fill="none" stroke="${YE}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 19h4l-4 4.5h4" fill="none" stroke="${YE}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`,
+    smile: `<path d="M6 17c2 12 26 12 28 0" fill="none" stroke="${YE}" stroke-width="6.5" stroke-linecap="round"/>${star4(31, 8, 7, BL)}<circle cx="9" cy="9" r="2.8" fill="${SK}"/>`,
+    rootcanal: `<path d="${TOOTH}" transform="translate(-1.5 -2.5) scale(1.75)" fill="${PU}"/><path d="M19.5 17V28" stroke="${BL}" stroke-width="3" stroke-linecap="round"/><circle cx="19.5" cy="12.5" r="2.8" fill="${OR}"/>`,
+    clean: `${star4(19, 19, 15, YE)}${star4(32, 31, 6.5, SK)}<circle cx="8" cy="8" r="3.2" fill="${PK}"/>`,
+    crown: `<path d="M6 30L4 12l9 7 7-12 7 12 9-7-2 18z" fill="${YE}"/><rect x="6" y="30" width="28" height="5.5" rx="2.7" fill="${BL}"/><circle cx="4" cy="11" r="2.4" fill="${OR}"/><circle cx="20" cy="6" r="2.4" fill="${OR}"/><circle cx="36" cy="11" r="2.4" fill="${OR}"/>`,
+    kids: `<path d="${TOOTH}" transform="translate(-1 -1.5) scale(1.6)" fill="${PK}"/>${star4(32, 9, 8, YE)}`,
+    checkup: `<circle cx="16" cy="16" r="10.5" fill="#E3F2FF" stroke="${BL}" stroke-width="4"/><path d="M24 24L34.5 34.5" stroke="${PU}" stroke-width="5.5" stroke-linecap="round"/>${star4(16, 16, 5.5, YE)}`
+  };
+  const LABEL_ICON = { 'Dental Implants': 'implant', 'Clear Aligners': 'aligner', 'Braces': 'braces', 'Anti-Snoring Treatment': 'snore', 'Smile Design': 'smile',
+    'Root Canal': 'rootcanal', 'Cleaning & Whitening': 'clean', 'Crowns & Bridges': 'crown', "Kids' Dentistry": 'kids', 'Checkup / Other': 'checkup' };
+  const iconSvg = t => `<svg viewBox="0 0 40 40" aria-hidden="true">${ICON[t.icon] || ICON[LABEL_ICON[t.label]] || ICON.checkup}</svg>`;
+
+  const AVC = ['#FFE14F', '#9ED8FF', '#D9C9F0', '#FFC999'];
+  const initials = d => d.team ? 'All' : d.name.replace(/^Dr\.?\s*/i, '').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  C.doctors.forEach((d, k) => {
+    $('#doctorList').append(toggleBtn('opt', `<span class="otxt"><span class="nm">${d.name}</span>${d.role ? `<small>${d.role}</small>` : ''}</span><span class="ini" style="background:${AVC[k % 4]}">${initials(d)}</span><span class="ind">${CHK}</span>`, on => {
       if (on) state.doctors.add(d); else state.doctors.delete(d);
-      $('#doctorNext').disabled = state.doctors.size === 0;
+      $('#docN').textContent = state.doctors.size; bump($('#docN'));
+      setReady($('#doctorNext'), state.doctors.size > 0);
       return on;
     }));
   });
   $('#doctorNext').onclick = () => show('s-treatment');
 
-  $('#maxT').textContent = C.maxTreatments;
+  $('#maxT').textContent = C.maxTreatments; $('#maxT2').textContent = C.maxTreatments;
   C.treatments.forEach(t => {
-    $('#treatmentList').append(toggleBtn('card', `<span class="em">${t.emoji || '🦷'}</span>${t.label}`, on => {
+    $('#treatmentList').append(toggleBtn('tcard', `<span class="tl">${t.label}</span><span class="ico">${iconSvg(t)}</span><span class="badge">${CHK}</span>`, on => {
       if (on) { if (state.treatments.size >= C.maxTreatments) return false; state.treatments.add(t); }
       else state.treatments.delete(t);
-      $('#treatmentNext').disabled = state.treatments.size === 0;
+      $('#trN').textContent = state.treatments.size; bump($('#trN'));
+      setReady($('#treatmentNext'), state.treatments.size > 0);
       return on;
     }));
   });
   $('#treatmentNext').onclick = () => show('s-liked');
 
-  $('#maxN').textContent = C.maxLiked;
+  $('#maxN').textContent = C.maxLiked; $('#maxN2').textContent = C.maxLiked;
   function chipGroup(el, items) {
-    items.forEach(it => el.append(toggleBtn('chip', `${it.emoji || ''} ${it.label}`, on => {
+    items.forEach(it => el.append(toggleBtn('chip', `<span class="ck">${CHK}</span>${it.label}`, on => {
       if (on) { if (state.liked.size >= C.maxLiked) return false; state.liked.set(it.label, it.say); }
       else state.liked.delete(it.label);
-      $('#writeBtn').disabled = state.liked.size === 0;
+      $('#likeN').textContent = state.liked.size; bump($('#likeN'));
+      setReady($('#writeBtn'), state.liked.size > 0);
       return on;
     })));
   }
@@ -661,7 +785,7 @@ Variation code (make this review different from any other): ${p.seed}`;
   }
 
   /* ---------- generate ---------- */
-  const LOAD_MSGS = ['Sprinkling some words… ✍️', 'Finding the perfect phrase… 🔍', 'Almost there… 🎁'];
+  const LOAD_MSGS = ['Sprinkling some words…', 'Finding the perfect phrase…', 'Almost there…'];
   async function generate() {
     show('s-write');
     $('#result').hidden = true; $('#loading').hidden = false;
@@ -706,6 +830,7 @@ Variation code (make this review different from any other): ${p.seed}`;
     const source = text ? 'ai' : best ? 'ai-no-keyword' : 'offline';
     text = text || best;
     if (!text) text = localReview(p);
+    if (C.tmInReview) text = text.replace(/Flosswork(?!™)/g, 'Flosswork™');   // optional, off by default
 
     state.edited = false;
     setLast({ source, attempts, model, fellBack, seo: p.seo[0] || null, ms: Date.now() - started });
@@ -715,14 +840,21 @@ Variation code (make this review different from any other): ${p.seed}`;
     clearInterval(msgTimer);
 
     $('#review').value = text;
-    $('#loading').hidden = true; $('#result').hidden = false;
+    $('#loading').hidden = true; $('#result').hidden = false; fit($('#review'));
   }
   $('#writeBtn').onclick = generate;
   $('#againBtn').onclick = () => {
     if (state.edited && !confirm('This will replace your edits with a new version. Continue?')) return;
     generate();
   };
-  $('#review').addEventListener('input', () => { state.edited = true; });
+  $('#review').addEventListener('input', () => { state.edited = true; fit($('#review')); });
+
+  document.addEventListener('pointerdown', e => {
+    const b = e.target.closest('.btn'); if (!b || b.disabled || reduced) return;
+    const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2, s = document.createElement('span');
+    s.className = 'ripple'; s.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
+    b.appendChild(s); setTimeout(() => s.remove(), 600);
+  });
 
   /* ---------- copy + go to Google ---------- */
   async function copyText(t) {
@@ -753,7 +885,7 @@ Variation code (make this review different from any other): ${p.seed}`;
     }, 1000);
   }
   function showCopied(ok, review) {
-    $('#manualText').value = review;
+    $('#manualText').value = review; fit($('#manualText'));
     if (ok) {
       $('#goSub').textContent = 'Your review is copied ✓';
       $('#cd').hidden = false;
@@ -768,8 +900,10 @@ Variation code (make this review different from any other): ${p.seed}`;
   $('#copyGo').onclick = async () => {
     const review = $('#review').value;
     const ok = await copyText(review);
-    show('s-go'); confetti();
-    showCopied(ok, review);
+    if (ok) { openGoogle(); return; }              // copied: go straight to the Google review page
+    // Copy was blocked (common inside in-app browsers): stay here so the patient can copy by hand first.
+    show('s-go');
+    showCopied(false, review);
   };
   $('#openNow').onclick = openGoogle;
   $('#copyAgain').onclick = async () => {
