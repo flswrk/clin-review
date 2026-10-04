@@ -177,7 +177,7 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .hero{position:relative;height:250px;margin:8px 0 0;border-radius:40px;background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:0 28px;text-align:center}
 .hero .decor{position:absolute;inset:0;width:100%;height:100%}
 .hero-name{position:relative;max-width:270px;font-size:34px;line-height:1.1;font-weight:800;letter-spacing:-.8px;text-wrap:balance}
-.hero-logo{position:relative;max-width:78%;max-height:min(150px,calc(100% - 44px));object-fit:contain}
+.hero-logo{position:relative;height:100%;width:auto;max-width:94%;object-fit:contain}
 .decor .tw1,.decor .tw3{transform-box:fill-box;transform-origin:center;animation:twinkle 3.2s ease-in-out infinite}
 .decor .tw3{animation-delay:1.1s}
 .decor .tw1{fill:var(--star)}.decor .tw3{fill:var(--yel)}
@@ -387,7 +387,8 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .hero-thanks .d3{bottom:20px;left:24px;width:24px;height:24px}
 .hero-thanks .d3 .tw3{fill:var(--yel)}
 .hero-thanks .d4{top:38px;left:32px;width:10px;height:10px;border-radius:50%;background:var(--blue)}
-.hero-thanks .hero-logo{max-height:130px}
+.hero-thanks .hero-logo{height:210px;width:auto;max-width:94%}
+.hero-thanks.has-logo{padding:6px 24px}
 #s-thanks .q.center{padding:26px 6px 4px}
 #s-thanks .fine{margin:14px 0 0}
 
@@ -506,10 +507,10 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
   <section id="s-welcome" class="screen active">
     <div class="hero" id="heroWelcome">
       <svg class="decor" viewBox="0 0 342 250" aria-hidden="true">
-        <path class="tw1" d="M276 52 Q276 74 298 74 Q276 74 276 96 Q276 74 254 74 Q276 74 276 52Z"/>
-        <circle class="tw2" cx="306" cy="34" r="8"/>
-        <path class="tw3" d="M60 188 Q60 200 72 200 Q60 200 60 212 Q60 200 48 200 Q60 200 60 188Z"/>
-        <circle class="tw4" cx="40" cy="64" r="5"/>
+        <path class="tw1" d="M298 40 Q298 62 320 62 Q298 62 298 84 Q298 62 276 62 Q298 62 298 40Z"/>
+        <circle class="tw2" cx="322" cy="26" r="8"/>
+        <path class="tw3" d="M38 198 Q38 210 50 210 Q38 210 38 222 Q38 210 26 210 Q38 210 38 198Z"/>
+        <circle class="tw4" cx="24" cy="44" r="5"/>
       </svg>
       <img id="heroLogo" class="hero-logo" alt="Flosswork™ Dental Clinic" hidden>
       <div id="heroName" class="hero-name">Flosswork™ Dental Clinic</div>
@@ -684,8 +685,8 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
   $('#heroName').textContent = tm(C.clinicName); $('#heroName2').textContent = tm(C.clinicName);
   if (C.logo) {
     const useLogo = (img, nameEl) => {
-      img.onload = () => { img.hidden = false; nameEl.hidden = true; };
-      img.onerror = () => { img.hidden = true; nameEl.hidden = false; };
+      img.onload = () => { img.hidden = false; nameEl.hidden = true; img.parentElement.classList.add('has-logo'); };
+      img.onerror = () => { img.hidden = true; nameEl.hidden = false; img.parentElement.classList.remove('has-logo'); };
       img.src = C.logo;
     };
     useLogo($('#heroLogo'), $('#heroName'));
