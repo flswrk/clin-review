@@ -35,35 +35,28 @@ window.FW = {
   // 3) Treatments (patients can pick several). "phrase" is used inside the review.
   //    "lead" (optional) = the lead doctor auto-added when a patient picks only a staff member.
   treatments: [
-    { label: "Dental Implants", icon: "implant",        phrase: "dental implant treatment", emoji: "🦷", seo: "dental implants in Raipur", lead: "Dr. Priyesh Gupta" },
-    { label: "Clear Aligners", icon: "aligner",         phrase: "clear aligner treatment",  emoji: "😁", seo: "clear aligners in Raipur", lead: "Dr. Nehal Saraf" },
-    { label: "Braces", icon: "braces",                 phrase: "braces treatment",         emoji: "😬", seo: "braces in Raipur", lead: "Dr. Nehal Saraf" },
-    { label: "Anti-Snoring Treatment", icon: "snore", phrase: "anti-snoring treatment",   emoji: "😴", seo: "anti-snoring treatment in Raipur" },
-    { label: "Smile Design", icon: "smile",           phrase: "smile design treatment",           emoji: "✨", seo: "smile design in Raipur" },
-    { label: "Root Canal", icon: "rootcanal",             phrase: "root canal treatment",     emoji: "🛠️", seo: "root canal treatment in Raipur" },
-    { label: "Cleaning & Whitening", icon: "clean",   phrase: "cleaning and whitening",   emoji: "🫧", seo: "teeth whitening in Raipur" },
-    { label: "Crowns & Bridges", icon: "crown",       phrase: "crown and bridge work",    emoji: "👑", seo: "dental crowns in Raipur" },
-    { label: "Kids' Dentistry", icon: "kids",        phrase: "my child's dental care",   emoji: "🧸", child: true, seo: "kids' dental care in Raipur" },
-    { label: "Checkup / Other", icon: "checkup",        phrase: "dental care",              emoji: "🔍", seo: "dental care in Raipur" }
+    { label: "Cleaning & Whitening", icon: "clean",       phrase: "cleaning and whitening",        seo: "teeth cleaning and whitening in Raipur" },
+    { label: "Dental Filling",       icon: "filling",     phrase: "a dental filling",              seo: "dental fillings in Raipur" },
+    { label: "Root Canal",           icon: "rootcanal",   phrase: "root canal treatment",          seo: "root canal treatment in Raipur" },
+    { label: "Aligners & Braces",    icon: "alignbraces", phrase: "aligner and braces treatment",  seo: "aligners and braces in Raipur", lead: "Dr. Nehal Saraf" },
+    { label: "Dental Implants",      icon: "implant",     phrase: "dental implant treatment",      seo: "dental implants in Raipur",     lead: "Dr. Priyesh Gupta" },
+    { label: "Wisdom Tooth Removal", icon: "extract",     phrase: "wisdom tooth removal",          seo: "wisdom tooth removal in Raipur" },
+    { label: "Gum Treatment",        icon: "gum",         phrase: "gum treatment",                 seo: "gum treatment in Raipur" },
+    { label: "Routine Checkup",      icon: "checkup",     phrase: "a routine checkup",             seo: "dental checkups in Raipur" }
   ],
 
   // 4) What patients liked. "say" feeds the offline fallback writer.
   likedTreatment: [
-    { label: "Painless & comfortable",  say: "the comfortable, painless treatment", emoji: "😌" },
-    { label: "Explained clearly",       say: "the clear explanations", emoji: "💬" },
-    { label: "Natural-looking results", say: "the natural-looking result", emoji: "🌿" },
-    { label: "Careful, precise work",   say: "the careful, precise work", emoji: "🎯" },
-    { label: "Honest advice",           say: "the honest advice, with no pressure", emoji: "🤝" },
-    { label: "Advanced technology",     say: "the modern digital technology", emoji: "🔬" },
-    { label: "Good follow-up care",     say: "the follow-up care", emoji: "💙" }
+    { label: "Comfortable treatment",         say: "the comfortable treatment" },
+    { label: "Clear treatment explanation",   say: "the clear explanation of my treatment" },
+    { label: "Transparent treatment costs",   say: "the transparent treatment costs" },
+    { label: "Honest advice",                 say: "the honest advice" }
   ],
   likedClinic: [
-    { label: "Spotless hygiene",        say: "the spotless hygiene", emoji: "🧼" },
-    { label: "Friendly staff",          say: "the warm, friendly staff", emoji: "😊" },
-    { label: "On-time appointments",    say: "the on-time appointments", emoji: "⏰" },
-    { label: "Calm, modern clinic",     say: "the calm, modern clinic", emoji: "🛋️" },
-    { label: "Transparent pricing",     say: "the transparent pricing", emoji: "🏷️" },
-    { label: "Felt safe and cared for", say: "the safe, caring environment", emoji: "🛡️" }
+    { label: "Clean, calm, hygienic clinic",  say: "the clean, calm, hygienic clinic" },
+    { label: "Modern dental technology",      say: "the modern dental technology" },
+    { label: "Friendly dentists and staff",   say: "the friendly dentists and staff" },
+    { label: "Good follow-up care",           say: "the good follow-up care" }
   ],
 
   // SEO: in this share of reviews, one natural "service in city" phrase (the treatment's "seo" field) is
@@ -78,8 +71,13 @@ window.FW = {
   // inside the review text the patient posts on Google (off by default: it is the patient's own public text).
   tmInReview: false,
 
+  // "Something else?" box on the treatment screen: the patient can type a treatment that is not listed.
+  allowOtherTreatment: true,
+  otherLabel: "Something else?",
+  otherPlaceholder: "For example: dentures, tooth jewellery",
+
   maxTreatments: 3,
-  maxLiked: 5,
+  maxLiked: 3,
 
   // 5) AI. Default "proxy": the page talks to your Cloudflare Worker, so the AI key stays hidden.
   //    ("direct" is only for quick local tests: it puts the key in the page.)
@@ -124,10 +122,14 @@ window.FW = {
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;background:#fff}
-body{margin:0;max-width:480px;margin-inline:auto;background:#fff;color:var(--ink);font-family:'Figtree',system-ui,sans-serif;font-size:16px;line-height:1.5;padding-top:env(safe-area-inset-top,0px);min-height:100vh}
-button,textarea{font-family:inherit}
-button{cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
-@media (min-width:600px){html{background:#F3EEEA}body{margin:16px auto;min-height:calc(100vh - 32px);border-radius:28px;box-shadow:0 10px 40px rgba(45,44,42,.08);overflow:hidden}}
+body{margin:0;background:#fff;color:var(--ink);font-family:'Figtree',system-ui,sans-serif;font-size:16px;line-height:1.5}
+/* phone: the page fills the screen. Desktop/tablet (below): a rounded card that ends where its content ends. */
+.shell{max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:#fff;padding-top:env(safe-area-inset-top,0px)}
+@media (min-width:600px){
+  html,body{background:#F3EEEA}
+  .shell{min-height:0;margin:24px auto;padding-top:0;border-radius:28px;box-shadow:0 10px 40px rgba(45,44,42,.08);overflow:clip}
+  #s-treatment .grid{grid-template-rows:repeat(var(--rows,4),82px)}
+}
 
 /* ---------- header ---------- */
 .top{position:relative;padding:8px 14px 0}
@@ -136,7 +138,7 @@ button{cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-se
 .slot{width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;position:relative}
 .hback{width:44px;height:44px;padding:0;border:0;border-radius:50%;background:var(--card);color:var(--ink);display:flex;align-items:center;justify-content:center;transition:transform .15s,background .2s}
 .hback:active{transform:scale(.86);background:var(--track)}
-.brand{font-weight:800;font-size:20px;letter-spacing:-.4px}
+.brand{font-weight:800;font-size:20px;letter-spacing:-.4px;white-space:nowrap}
 .brand span{font-weight:500;font-size:12px;color:var(--mut);margin-left:4px;letter-spacing:0}
 .logo{display:block;max-height:38px;max-width:100%;object-fit:contain}
 body[data-s="s-welcome"] .mid{visibility:hidden}
@@ -155,9 +157,9 @@ body[data-s="s-welcome"] .meter,body[data-s="s-own"] .meter{display:none}
 @keyframes starpop{0%{transform:scale(.2) rotate(-60deg)}60%{transform:scale(1.6) rotate(20deg)}100%{transform:scale(1.15) rotate(0)}}
 
 /* ---------- screens ---------- */
-main{max-width:480px;margin:0 auto}
+main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction:column}
 .screen{display:none;padding:6px 22px 0}
-.screen.active{display:block}
+.screen.active{display:block;flex:1}
 .screen.enter{animation:enter .45s cubic-bezier(.22,1,.36,1)}
 @keyframes enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
@@ -237,7 +239,7 @@ main{max-width:480px;margin:0 auto}
 .ico svg{width:30px;height:30px}
 .badge{position:absolute;top:-10px;left:-10px;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--blue);display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
 .badge svg{width:12px;height:12px;stroke:var(--blue)}
-.tcard[aria-pressed="true"] .badge{transform:scale(1)}
+
 
 .grp{margin:20px 0 9px;font-size:13.5px;font-weight:700;color:var(--mut)}
 .chips{display:flex;flex-wrap:wrap;gap:9px}
@@ -315,10 +317,86 @@ main{max-width:480px;margin:0 auto}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}#confetti{display:none}}
 
 .mid-tag{align-self:center;margin:0 0 2px}
+
+/* treatment screen: all eight cards fit on the phone screen; the grid shares whatever height is left */
+#s-treatment.active{display:flex;flex-direction:column}
+#s-treatment .q{padding-bottom:8px}
+#s-treatment .q h2{font-size:30px}
+#s-treatment .q p{margin-top:4px}
+#s-treatment .grid{flex:1;max-height:520px;grid-template-rows:repeat(var(--rows,4),minmax(50px,1fr));padding-top:4px}
+#s-treatment .tcard{min-height:0;height:100%}
+#s-treatment .cta{margin-top:auto}
+@media (max-height:700px){
+  .meter{width:210px}.top{padding-top:4px}.topbar{min-height:46px}
+  #s-treatment .q h2{font-size:26px}#s-treatment .q p{font-size:14.5px}
+  #s-treatment .cta{padding-top:8px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));gap:6px}
+  #s-treatment .btn{min-height:52px}
+}
+
+@media (max-height:600px){
+  .meter{width:150px}.top{padding-top:2px}.topbar{min-height:42px}
+  #s-treatment .q{padding-top:2px;padding-bottom:4px}
+  #s-treatment .q h2{font-size:23px}#s-treatment .q p{font-size:13.5px;margin-top:2px}
+  #s-treatment .grid{gap:8px;grid-template-rows:repeat(var(--rows,4),minmax(40px,1fr))}
+  #s-treatment .tcard{padding-top:0;padding-bottom:0}
+  #s-treatment .cta{margin-top:6px;padding-top:6px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));gap:4px}
+  #s-treatment .btn{min-height:48px}
+  #s-treatment .meta{font-size:13px}
+}
+
+#s-treatment .q h2{font-size:28px}
+@media (max-width:359px){.brand{font-size:18px}.brand span{font-size:11px;margin-left:3px}}
+@media (max-width:420px) and (min-height:760px){
+  .ico{width:46px;height:46px}.ico svg{width:36px;height:36px}
+  #s-treatment .tl{font-size:14px}
+}
+
+
+@media (min-width:600px){#s-treatment .grid{grid-template-rows:repeat(var(--rows,4),clamp(52px,calc((100dvh - 540px) / var(--rows,4)),82px))}}
+
+.tcard.on .badge svg{animation:draw .35s .05s ease-out forwards}
+
+/* "Something else?" box: same look as "Anything else?" on the next page */
+#s-treatment .other-wrap .field{margin:14px 0 6px}
+#otherInput{display:block;width:100%;padding:14px 16px;border:3px solid var(--bd);border-radius:18px;background:#fff;color:var(--ink);font:16px/1.5 'Figtree',system-ui,sans-serif}
+#otherInput:focus{outline:none;border-color:var(--blue)}
+#otherInput:disabled{background:var(--card);opacity:.7}
+@media (max-height:700px){#s-treatment .other-wrap .field{margin:8px 0 4px;font-size:13px}#otherInput{padding:10px 14px}}
+@media (max-height:600px){#s-treatment .other-wrap .field{margin:5px 0 3px;font-size:12.5px}#otherInput{padding:8px 12px;font-size:15px}}
+
+@media (max-height:700px){
+  #s-treatment .q{padding-top:2px;padding-bottom:4px}
+  #s-treatment .grid{gap:8px;grid-template-rows:repeat(var(--rows,4),minmax(46px,1fr))}
+  #s-treatment .other-wrap .field{margin:6px 0 3px}
+  #otherInput{padding:9px 14px}
+}
+@media (max-height:600px){
+  #s-treatment .grid{gap:6px;grid-template-rows:repeat(var(--rows,4),minmax(40px,1fr))}
+  #s-treatment .q h2{font-size:22px}
+  #s-treatment .other-wrap .field{margin:4px 0 2px}
+  #otherInput{padding:7px 12px}
+}
+
+/* thank-you card: it hugs its content, with even padding all round and the same side margins as every other card */
+.hero-thanks{height:auto;min-height:0;margin:14px 0 0;padding:54px 30px}
+.hero-thanks .dc{position:absolute;pointer-events:none}
+.hero-thanks .d1{top:18px;right:24px;width:40px;height:40px}
+.hero-thanks .d1 .tw1{fill:var(--star)}
+.hero-thanks .d2{top:20px;right:72px;width:14px;height:14px;border-radius:50%;background:var(--sky)}
+.hero-thanks .d3{bottom:20px;left:24px;width:24px;height:24px}
+.hero-thanks .d3 .tw3{fill:var(--yel)}
+.hero-thanks .d4{top:38px;left:32px;width:10px;height:10px;border-radius:50%;background:var(--blue)}
+.hero-thanks .hero-logo{max-height:130px}
+#s-thanks .q.center{padding:26px 6px 4px}
+#s-thanks .fine{margin:14px 0 0}
+
+/* thank-you page: breathing room under the last line (no action bar on this page) */
+#s-thanks{padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body data-s="s-welcome">
 
+<div class="shell">
 <header class="top">
   <div class="topbar">
     <div class="slot"><button id="backBtn" class="hback" type="button" aria-label="Back" hidden>
@@ -341,8 +419,6 @@ main{max-width:480px;margin:0 auto}
     </svg>
   </div>
 </header>
-
-<div id="confetti" aria-hidden="true"></div>
 
 <main id="app">
 
@@ -391,6 +467,10 @@ main{max-width:480px;margin:0 auto}
   <section id="s-treatment" class="screen">
     <div class="q"><h2>What did we work on?</h2><p>Pick up to <span id="maxT">3</span>.</p></div>
     <div id="treatmentList" class="grid"></div>
+    <div class="other-wrap" id="otherWrap">
+      <label class="field" for="otherInput"><span id="otherLabel">Something else?</span> <em>(optional)</em></label>
+      <input id="otherInput" type="text" maxlength="40" autocomplete="off" autocapitalize="sentences" enterkeyhint="done" placeholder="For example: dentures, tooth jewellery">
+    </div>
     <div class="cta"><div class="meta"><b id="trN">0</b> of <span id="maxT2">3</span> selected</div><button class="btn primary" id="treatmentNext" type="button" disabled>Next</button></div>
   </section>
 
@@ -450,13 +530,11 @@ main{max-width:480px;margin:0 auto}
 
   <!-- THANKS -->
   <section id="s-thanks" class="screen">
-    <div class="hero" id="heroThanks">
-      <svg class="decor" viewBox="0 0 342 250" aria-hidden="true">
-        <path class="tw1" d="M276 52 Q276 74 298 74 Q276 74 276 96 Q276 74 254 74 Q276 74 276 52Z"/>
-        <circle class="tw2" cx="306" cy="34" r="8"/>
-        <path class="tw3" d="M60 188 Q60 200 72 200 Q60 200 60 212 Q60 200 48 200 Q60 200 60 188Z"/>
-        <circle class="tw4" cx="40" cy="64" r="5"/>
-      </svg>
+    <div class="hero hero-thanks" id="heroThanks">
+      <svg class="dc d1" viewBox="0 0 40 40" aria-hidden="true"><path class="tw1" d="M20 2 Q20 20 38 20 Q20 20 20 38 Q20 20 2 20 Q20 20 20 2Z"/></svg>
+      <span class="dc d2" aria-hidden="true"></span>
+      <svg class="dc d3" viewBox="0 0 40 40" aria-hidden="true"><path class="tw3" d="M20 4 Q20 20 36 20 Q20 20 20 36 Q20 20 4 20 Q20 20 20 4Z"/></svg>
+      <span class="dc d4" aria-hidden="true"></span>
       <img id="heroLogo2" class="hero-logo" alt="Flosswork™ Dental Clinic" hidden>
       <div id="heroName2" class="hero-name">Flosswork™ Dental Clinic</div>
     </div>
@@ -468,6 +546,9 @@ main{max-width:480px;margin:0 auto}
   </section>
 
 </main>
+</div>
+
+<div id="confetti" aria-hidden="true"></div>
 
 <script>
 (() => {
@@ -569,7 +650,7 @@ main{max-width:480px;margin:0 auto}
     let id = e.state && e.state.s;
     if (!id || !document.getElementById(id)) id = 's-welcome';
     if (id === 's-go' || id === 's-thanks') id = 's-write';        // never re-enter the redirect screens
-    const ready = { 's-treatment': state.doctors.size > 0, 's-liked': state.treatments.size > 0,
+    const ready = { 's-treatment': state.doctors.size > 0, 's-liked': state.treatments.size + (typeof otherValid === 'function' && otherValid() ? 1 : 0) > 0,
                     's-write': state.liked.size > 0 && !!$('#review').value };
     if (id in ready && !ready[id]) id = 's-welcome';                // reloaded page: nothing chosen yet
     if (id === 's-write') { $('#loading').hidden = true; $('#result').hidden = false; }
@@ -612,10 +693,13 @@ main{max-width:480px;margin:0 auto}
     clean: `${star4(19, 19, 15, YE)}${star4(32, 31, 6.5, SK)}<circle cx="8" cy="8" r="3.2" fill="${PK}"/>`,
     crown: `<path d="M6 30L4 12l9 7 7-12 7 12 9-7-2 18z" fill="${YE}"/><rect x="6" y="30" width="28" height="5.5" rx="2.7" fill="${BL}"/><circle cx="4" cy="11" r="2.4" fill="${OR}"/><circle cx="20" cy="6" r="2.4" fill="${OR}"/><circle cx="36" cy="11" r="2.4" fill="${OR}"/>`,
     kids: `<path d="${TOOTH}" transform="translate(-1 -1.5) scale(1.6)" fill="${PK}"/>${star4(32, 9, 8, YE)}`,
+    filling: `<path d="${TOOTH}" transform="translate(-1.5 -2.5) scale(1.75)" fill="${PU}"/><ellipse cx="19.5" cy="12.5" rx="5.4" ry="3.8" fill="${YE}"/>${star4(32, 8, 6, SK)}`,
+    alignbraces: `<path d="M5 25C5 13 12 7 20 7s15 6 15 18" fill="none" stroke="${SK}" stroke-width="6.5" stroke-linecap="round"/><rect x="7" y="25" width="7.5" height="11" rx="3.6" fill="#E6DCF5"/><rect x="16.2" y="25" width="7.5" height="11" rx="3.6" fill="#E6DCF5"/><rect x="25.5" y="25" width="7.5" height="11" rx="3.6" fill="#E6DCF5"/><path d="M5 30.5H35" stroke="${PU}" stroke-width="2" stroke-linecap="round"/><rect x="8.9" y="28.6" width="3.6" height="3.8" rx="1.1" fill="${BL}"/><rect x="18.1" y="28.6" width="3.6" height="3.8" rx="1.1" fill="${BL}"/><rect x="27.4" y="28.6" width="3.6" height="3.8" rx="1.1" fill="${BL}"/>`,
+    extract: `<path d="${TOOTH}" transform="translate(-1.2 6) scale(1.55)" fill="${PK}"/><path d="M20 15V3M14.8 8.2L20 3l5.2 5.2" fill="none" stroke="${BL}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>${star4(33, 14, 4.5, YE)}`,
+    gum: `<path d="${TOOTH}" transform="translate(-1.5 -3) scale(1.75)" fill="#E6DCF5"/><path d="M2 27Q10 20 20 26T38 26V38H2Z" fill="${PK}"/>${star4(32, 8, 5.5, YE)}<circle cx="8" cy="9" r="2.6" fill="${SK}"/>`,
     checkup: `<circle cx="16" cy="16" r="10.5" fill="#E3F2FF" stroke="${BL}" stroke-width="4"/><path d="M24 24L34.5 34.5" stroke="${PU}" stroke-width="5.5" stroke-linecap="round"/>${star4(16, 16, 5.5, YE)}`
   };
-  const LABEL_ICON = { 'Dental Implants': 'implant', 'Clear Aligners': 'aligner', 'Braces': 'braces', 'Anti-Snoring Treatment': 'snore', 'Smile Design': 'smile',
-    'Root Canal': 'rootcanal', 'Cleaning & Whitening': 'clean', 'Crowns & Bridges': 'crown', "Kids' Dentistry": 'kids', 'Checkup / Other': 'checkup' };
+  const LABEL_ICON = { 'Cleaning & Whitening': 'clean', 'Dental Filling': 'filling', 'Root Canal': 'rootcanal', 'Aligners & Braces': 'alignbraces', 'Dental Implants': 'implant', 'Wisdom Tooth Removal': 'extract', 'Gum Treatment': 'gum', 'Routine Checkup': 'checkup' };
   const iconSvg = t => `<svg viewBox="0 0 40 40" aria-hidden="true">${ICON[t.icon] || ICON[LABEL_ICON[t.label]] || ICON.checkup}</svg>`;
 
   const AVC = ['#FFE14F', '#9ED8FF', '#D9C9F0', '#FFC999'];
@@ -631,15 +715,39 @@ main{max-width:480px;margin:0 auto}
   $('#doctorNext').onclick = () => show('s-treatment');
 
   $('#maxT').textContent = C.maxTreatments; $('#maxT2').textContent = C.maxTreatments;
+  // "Something else?": a text box (same look as "Anything else?" on the next page). What the patient types
+  // counts as one of the picks.
+  const other = { text: '' };
+  const cleanOther = s => String(s || '').replace(/[\u0000-\u001f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 40);
+  const otherValid = () => cleanOther(other.text).length > 0;
+  const treatPicks = () => state.treatments.size + (otherValid() ? 1 : 0);              // counts toward the limit
+  const phraseFrom = s => s.replace(/^([A-Z])([a-z])/, (m, x, y) => x.toLowerCase() + y);   // "Dentures" -> "dentures"
+  const customTreatment = () => { const t = cleanOther(other.text); return { label: t, phrase: phraseFrom(t), custom: true }; };
+  const otherInput = $('#otherInput');
+  function refreshTreat() {
+    $('#trN').textContent = treatPicks(); bump($('#trN'));
+    setReady($('#treatmentNext'), treatPicks() > 0);
+    // no room for a typed treatment when three cards are already picked
+    const full = state.treatments.size >= C.maxTreatments && !otherValid();
+    otherInput.disabled = full;
+    otherInput.placeholder = full ? 'You can pick up to ' + C.maxTreatments + '. Untick one to add this.' : (C.otherPlaceholder || '');
+  }
   C.treatments.forEach(t => {
-    $('#treatmentList').append(toggleBtn('tcard', `<span class="tl">${t.label}</span><span class="ico">${iconSvg(t)}</span><span class="badge">${CHK}</span>`, on => {
-      if (on) { if (state.treatments.size >= C.maxTreatments) return false; state.treatments.add(t); }
+    $('#treatmentList').append(toggleBtn('tcard', `<span class="tl">${t.label}</span><span class="ico">${iconSvg(t)}</span>`, on => {
+      if (on) { if (treatPicks() >= C.maxTreatments) return false; state.treatments.add(t); }
       else state.treatments.delete(t);
-      $('#trN').textContent = state.treatments.size; bump($('#trN'));
-      setReady($('#treatmentNext'), state.treatments.size > 0);
+      refreshTreat();
       return on;
     }));
   });
+  $('#treatmentList').style.setProperty('--rows', Math.ceil(C.treatments.length / 2));
+  if (C.allowOtherTreatment === false) $('#otherWrap').hidden = true;
+  else {
+    $('#otherLabel').textContent = C.otherLabel || 'Something else?';
+    otherInput.placeholder = C.otherPlaceholder || '';
+    otherInput.addEventListener('input', () => { other.text = otherInput.value; refreshTreat(); });
+    otherInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); otherInput.blur(); } });
+  }
   $('#treatmentNext').onclick = () => show('s-liked');
 
   $('#maxN').textContent = C.maxLiked; $('#maxN2').textContent = C.maxLiked;
@@ -678,6 +786,7 @@ main{max-width:480px;margin:0 auto}
       `Big thanks to ${who} at ${clinic} for taking such good care of ${me} during ${phrase}.`,
       `${cap(who)} ${plural ? 'were' : 'was'} wonderful during ${phrase} at ${clinic}.`
     ];
+    const openers = p.hasCustom ? opens.filter(o => !/ during /.test(o)) : opens;
     const mids = [
       `What stood out for ${child ? 'us' : 'me'} was ${says}.`,
       `I especially appreciated ${says}.`,
@@ -702,7 +811,7 @@ main{max-width:480px;margin:0 auto}
     ];
     const extra = p.extra ? p.extra.replace(/\s+$/, '').replace(/([^.!?])$/, '$1.') : '';
     const closer = seoEnds.length ? pick(seoEnds) : pick(ends);
-    return [pick(opens), pick(mids), extra, (seoEnds.length || Math.random() < .8) ? closer : ''].filter(Boolean).join(' ');
+    return [pick(openers), pick(mids), extra, (seoEnds.length || Math.random() < .8) ? closer : ''].filter(Boolean).join(' ');
   }
 
   /* ---------- doctor ordering + review checks ---------- */
@@ -792,7 +901,7 @@ Variation code (make this review different from any other): ${p.seed}`;
     let i = 0; $('#loadMsg').textContent = LOAD_MSGS[0];
     const msgTimer = setInterval(() => { $('#loadMsg').textContent = LOAD_MSGS[Math.min(++i, 2)]; }, 1600);
 
-    const tr = [...state.treatments];
+    const tr = [...state.treatments]; if (otherValid()) tr.push(customTreatment());
     const od = orderedDoctors();
     const p = {
       doctors: od.names, leadNames: od.leadNames, staffNames: od.staffNames,
@@ -800,6 +909,7 @@ Variation code (make this review different from any other): ${p.seed}`;
       child: tr.length > 0 && tr.every(t => t.child),
       treatments: tr.map(t => t.label), phrases: tr.map(t => t.phrase),
       liked: [...state.liked.keys()], says: [...state.liked.values()],
+      hasCustom: tr.some(t => t.custom),
       seo: (() => { const s = tr.filter(t => t.seo); return s.length && Math.random() < (C.seoChance ?? 0) ? [pick(s).seo] : []; })(),
       extra: $('#extra').value.trim().slice(0, 200),
       seed: ''
