@@ -351,6 +351,8 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
 .hero-thanks.has-logo{padding:30px 24px}
 #s-thanks .q.center{padding:26px 6px 4px}
 #s-thanks .fine{margin:14px 0 0}
+.btn.igbtn,.btn.primary.igbtn:hover{text-decoration:none;color:#fff;border-color:transparent;background:linear-gradient(90deg,#F58529 0%,#DD2A7B 40%,#8134AF 75%,#515BD4 100%) border-box}
+#s-thanks .cta{padding:18px 22px 0}
 /* thank-you page: breathing room under the last line (no action bar on this page) */
 #s-thanks{padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
 @media (max-width:420px){
@@ -585,9 +587,8 @@ main{width:100%;max-width:480px;margin:0 auto;flex:1;display:flex;flex-direction
     </div>
     <div class="q center">
       <h1>Thank you!</h1>
-      <p id="thanksMsg">Your words will help someone take the first step toward a healthier smile.</p>
     </div>
-    <p class="fine">You can close this page now.</p>
+    <div class="cta"><a class="btn primary igbtn" href="https://www.instagram.com/helloflosswork?stkn=MTNnbWM2NXNobTA4dw%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r=".6"/></svg>Follow us on Instagram</a></div>
   </section>
 
 </main>
@@ -1069,9 +1070,6 @@ Variation code (make this review different from any other): ${p.seed}`;
   function welcomeBack() {
     if (sessionStorage.getItem('fw_went') !== '1') return;
     sessionStorage.removeItem('fw_went');
-    const named = orderedDoctors().names;
-    if (named.length) $('#thanksMsg').textContent =
-      `Your words will help someone take the first step toward a healthier smile. ${joinList(named)} and the team are grateful.`;
     show('s-thanks'); celebrate();
   }
   window.addEventListener('pageshow', welcomeBack);
